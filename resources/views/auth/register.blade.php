@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +9,7 @@
   <div class="flex items-center justify-center h-screen bg-gray-100">
       <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
           <h2 class="text-2xl font-bold text-center mb-6">Register</h2>
-          <form method="POST" action="/register">
+          <form method="POST" action="/register-proses">
               @csrf
                <!-- Role -->
               <div class="mb-4">
@@ -37,7 +36,7 @@
                   <!-- NIP -->
                   <div id="nip_dosen_field" class="mb-3 hidden">
                       <label for="nip_dosen" class="block text-sm font-medium text-gray-700">NIP</label>
-                      <input id="nip_dosen" type="text" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="kode_dosen">
+                      <input id="nip_dosen" type="text" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="nip_dosen">
                   </div>
             
                   <!-- Mahasiswa -->
@@ -48,20 +47,20 @@
                   <div class="flex gap-3">
                     <div id="tempat_lahir_field" class="mb-3 hidden">
                         <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
-                        <input id="tempat_lahir" type="text" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="nim">
+                        <input id="tempat_lahir" type="text" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="tempat_lahir">
                     </div>
                     <div id="tanggal_lahir_field" class="mb-3 hidden">
                         <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                        <input id="tanggal_lahir" type="date" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="nim">
+                        <input id="tanggal_lahir" type="date" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="tanggal_lahir">
                     </div>
                   </div>
               </div>
               
               <!-- Name -->
               <div class="mb-3">
-                  <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                  <input id="name" type="text" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="username" value="{{ old('username') }}" required autofocus>
-                  @error('name')
+                  <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
+                  <input id="nama" type="text" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="nama" value="{{ old('nama') }}" required autofocus>
+                  @error('nama')
                   <span class="text-red-500 text-sm">{{ $message }}</span>
                   @enderror
               </div>
