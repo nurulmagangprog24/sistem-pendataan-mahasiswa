@@ -5,14 +5,15 @@
     <h2 class="text-2xl font-bold text-gray-700 mb-6 ">Daftar Dosen</h2>
     <div class="mb-4">
         <!-- Button untuk membuka modal Tambah Dosen -->
-        <button class="bg-blue-600 text-white py-2 px-4 rounded" onclick="openModal('createDosenModal')">Tambah Dosen</button>
+        {{-- <button class="bg-blue-600 text-white py-2 px-4 rounded" onclick="openModal('createDosenModal')">Tambah Dosen</button>
         @include('form.dosen-modal', [
             'modalId' => 'createDosenModal',
             'title' => 'Tambah Dosen',
             'actionUrl' => '/kaprodi.dosen',
             'dosen' => null,
             'isEdit' => false
-        ])
+        ]) --}}
+        <a href="/dosen-modal" class="bg-blue-600 text-white py-2 px-4 rounded">Tambah Dosen</a>
     </div>
 
     <div class="flex h-full min-w-full flex-col justify-between overflow-hidden rounded-lg shadow-lg">
