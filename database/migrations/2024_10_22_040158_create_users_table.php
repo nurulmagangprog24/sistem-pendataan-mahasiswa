@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->enum('role', ['kaprodi', 'dosen wali', 'mahasiswa']);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
