@@ -29,17 +29,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout']);
 });
 
-// Route::get('/login', [LoginController::class, 'login'])->name('login');
-// Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
-// Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
+Route::post('/register-proses', [LoginController::class, 'validasiRegister']);
 
 // Route::get('/create', [DosenController::class, 'create'])->name('create');
 
 // Route::get('/', function () {
 //     return view('authlogin');
 // });
-// Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
-// Route::post('/register', [AuthController::class, 'register']);
 // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // Route::post('/login', [AuthController::class, 'login']);
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
