@@ -8,12 +8,12 @@
             <!-- Kaprodi Widgets -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Jumlah Dosen</h2>
-                <p class="text-gray-600">5 Dosen</p>
+                <p class="text-gray-600">{{ $jumlahDosen }} Dosen</p>
                 <a href="/kelola-dosen" class="block mt-4 text-blue-500 hover:underline">Lihat Detail</a>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Jumlah Kelas</h2>
-                <p class="text-gray-600">2 Kelas</p>
+                <p class="text-gray-600">{{ $jumlahKelas }} Kelas</p>
                 <a href="/kelola-dosen" class="block mt-4 text-blue-500 hover:underline">Lihat Detail</a>
             </div>
         @elseif(Auth::user()->role == 'dosen wali')
