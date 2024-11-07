@@ -4,9 +4,15 @@
 <div class="container mx-auto p-4">
     <h2 class="text-2xl font-bold text-gray-700 mb-6">Daftar Kelas</h2>
     <div class="mb-4">
-        <a href="{{-- route('kaprodi.kelas.create') --}}" class="bg-blue-600 text-white px-4 py-2 rounded-md">
-            Tambah Kelas
-        </a>
+        <!-- Button untuk membuka modal Tambah Kelas -->
+        <button class="bg-blue-600 text-white py-2 px-4 rounded" onclick="openModal('createKelasModal')">Tambah Kelas</button>
+        @include('form.tambah-kelas-modal', [
+            'modalId' => 'createKelasModal',
+            'title' => 'Tambah Kelas',
+            'actionUrl' => route('kelas.store'),
+            'kelas' => null,
+            'isEdit' => false
+        ])
     </div>
 
     <!-- Tabel Kelas -->
@@ -21,11 +27,11 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach($kelas as $k) --}}
+                @foreach($kelas as $item)
                 <tr>
-                    <td class="px-5 py-3">{{-- $index + 1 --}}</td>
-                    <td class="px-5 py-3">{{-- $k->name --}}</td>
-                    <td class="px-5 py-3">{{-- $k->jumlah }} / 10 --}}</td>
+                    <td class="px-5 py-3">{{ $loop->iteration }}</td>
+                    <td class="px-5 py-3">{{ $item->name }}</td>
+                    <td class="px-5 py-3">{{ $item->jumlah }}</td>
                     <td class="px-5 py-3">
                         <a href="{{-- route('kaprodi.kelas.edit', $k->id) --}}" class="px-5 py-2 rounded-md bg-blue-600 text-white hover:underline">Edit</a>
                         <form action="{{-- route('kaprodi.kelas.destroy', $k->id) --}}" method="POST" class="inline-block">
@@ -35,7 +41,7 @@
                         </form>
                     </td>
                 </tr>
-                {{-- @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>

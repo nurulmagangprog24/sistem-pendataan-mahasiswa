@@ -3,15 +3,17 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KelolaDosenController;
+use App\Http\Controllers\KelolaKelasController;
+use App\Http\Controllers\RegisterController;
 
 // Route::get('/', function () {
 //     return view('components.layout');
 // });
 
-// Route::get('/register', [RegisterController::class, 'register'])->name('register');
-// Route::post('/register-proses', [RegisterController::class, 'register_proses'])->name('register-proses');
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register-proses', [RegisterController::class, 'validasiRegister']);
 
 Route::middleware(['guest'])->group(function() {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
@@ -29,17 +31,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
-Route::post('/register-proses', [LoginController::class, 'validasiRegister']);
+// Route::get('/kelola-dosen', [KelolaDosenController::class, 'showKelolaDosen'])->name('kelola-dosen');
+// Route::get('/kelola-kelas', [KelolaKelasController::class, 'kelasList'])->name('kelola-kelas');
 
-// Route::get('/create', [DosenController::class, 'create'])->name('create');
+// Route::post('/kaprodi/dosen', [KelolaDosenController::class, 'createDosen'])->name('tambah-dosen');
 
-// Route::get('/', function () {
-//     return view('authlogin');
+Route::get('/kelola-dosen', [KelolaDosenController::class, 'index'])->name('kelola-dosen');
+Route::get('/kelola-kelas', [KelolaKelasController::class, 'index'])->name('kelola-kelas');
+
+// Route::middleware(['auth', 'role:kaprodi'])->group(function () {
+    Route::resource('dosen', KelolaDosenController::class);
+    Route::resource('kelas', KelolaKelasController::class);
 // });
-// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('/login', [AuthController::class, 'login']);
-// Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+// Route::middleware(['auth', 'role:kaprodi'])->group(function () {
+    Route::resource('kelas', KelolaKelasController::class);
+    Route::post('kelas/{id}/plot', [KelolaKelasController::class, 'plot'])->name('kelas.plot');
+// });
+
 
 // Route::group(['middleware' => ['auth', 'role:kaprodi']], function () {
 //     // Rute untuk Kaprodi
@@ -53,6 +64,3 @@ Route::post('/register-proses', [LoginController::class, 'validasiRegister']);
 //     // Rute untuk Mahasiswa
 // });
 
-// Route::get('/dashboard', function () {
-//     // Hanya kaprodi yang bisa mengakses route ini
-// })->middleware('role:kaprodi');
