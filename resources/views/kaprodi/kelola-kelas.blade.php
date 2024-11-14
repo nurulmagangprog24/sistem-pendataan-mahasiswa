@@ -5,7 +5,7 @@
     <h2 class="text-2xl font-bold text-gray-700 mb-6">Daftar Kelas</h2>
     <div class="mb-4">
         <!-- Button untuk membuka modal Tambah Kelas -->
-        <button class="bg-blue-600 text-white py-2 px-4 rounded" onclick="openModal('createKelasModal')">Tambah Kelas</button>
+        <button class="bg-blue-600 text-white py-2 px-4 rounded" onclick="openModal('createKelasModal')">Buat Kelas</button>
         @include('form.tambah-kelas-modal', [
             'modalId' => 'createKelasModal',
             'title' => 'Tambah Kelas',
@@ -31,7 +31,7 @@
                 <tr>
                     <td class="px-5 py-3">{{ $loop->iteration }}</td>
                     <td class="px-5 py-3">{{ $item->name }}</td>
-                    <td class="px-5 py-3">{{ $item->jumlah }}</td>
+                    <td class="px-5 py-3">{{ $item->mahasiswa_count }}</td>
                     <td class="px-5 py-3">
                         <a href="{{-- route('kaprodi.kelas.edit', $k->id) --}}" class="px-5 py-2 rounded-md bg-blue-600 text-white hover:underline">Edit</a>
                         <form action="{{-- route('kaprodi.kelas.destroy', $k->id) --}}" method="POST" class="inline-block">

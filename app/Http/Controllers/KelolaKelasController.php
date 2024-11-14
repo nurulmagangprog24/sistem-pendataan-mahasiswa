@@ -9,16 +9,11 @@ use Illuminate\Http\Request;
 
 class KelolaKelasController extends Controller
 {
-    public function index()
+    public function kelasList()
     {
-        $kelas = Kelas::with('dosen', 'mahasiswa')->get();
+        $kelas = Kelas::withCount('mahasiswa')->get();
         return view('kaprodi.kelola-kelas', compact('kelas'));
     }
-    // public function index()
-    // {
-    //     $kelas = Kelas::with('dosen', 'mahasiswa')->get();
-    //     return view('kelas.index', compact('kelas'));
-    // }
 
     // public function create()
     // {

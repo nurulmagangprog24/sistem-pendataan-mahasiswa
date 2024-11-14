@@ -24,17 +24,19 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($dataLogin)) {
-            if(Auth::user()->role == 'kaprodi'){
-                return redirect('dashboard/kaprodi');
-            } elseif (Auth::user()->role == 'dosen wali'){
-                return redirect('dashboard/dosen');
-            } elseif (Auth::user()->role == 'mahasiswa'){
-                return redirect('dashboard/mahasiswa');
-            }
-        } else {
-            return redirect('')->withErrors('Email atau password yang dimasukkan tidak sesuai')->withInput();
-        }
+        // if(Auth::attempt($dataLogin)) {
+        //     if(Auth::user()->role == 'kaprodi'){
+        //         return redirect('dashboard/kaprodi');
+        //     } elseif (Auth::user()->role == 'dosen wali'){
+        //         return redirect('dashboard/dosen');
+        //     } elseif (Auth::user()->role == 'mahasiswa'){
+        //         return redirect('dashboard/mahasiswa');
+        //     }
+        // } else {
+        //     return redirect('')->withErrors('Email atau password yang dimasukkan tidak sesuai')->withInput();
+        // }
+        Auth::attempt($dataLogin);
+        return redirect('dashboard');
     }
 
     function logout() {
