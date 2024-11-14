@@ -11,30 +11,21 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     function index() {
-        return view('dashboard.index');
+        $role = Auth::user()->role;
+
+        if ($role == 'kaprodi') {
+            $jumlahDosen = Dosen::count();
+            $jumlahKelas = Kelas::count();
+            return view('dashboard.kaprodi', compact('jumlahDosen', 'jumlahKelas'));
+        } elseif ($role == 'dosen wali') {
+            // $mahasiswaBimbingan = Mahasiswa::where('dosen_wali_id', Auth::id())->count();
+            // $permintaanData = Permintaan::where('dosen_id', Auth::id())->count();
+            return view('dashboard.dosen');
+        } elseif ($role == 'mahasiswa') {
+            return view('dashboard.mahasiswa', ['username' => Auth::user()->username]);
+        }
+
+        return abort(403, 'Unauthorized');
+
     }
-    
-    function dashboardKaprodi() {
-        $jumlahDosen = Dosen::count();
-        $jumlahKelas = Kelas::count();
-
-        Log::info('Fungsi kaprodi dijalankan', ['jumlahDosen' => $jumlahDosen, 'jumlahKelas' => $jumlahKelas]);
-        
-        return view('dashboard.index', compact('jumlahDosen', 'jumlahKelas'));
-    }
-
-
-
-
-
-
-
-    function dashboardDosen() {
-        return view('dashboard.index');
-    }
-
-    function dashboardMahasiswa() {
-        return view('dashboard.index');
-    }
-
 }

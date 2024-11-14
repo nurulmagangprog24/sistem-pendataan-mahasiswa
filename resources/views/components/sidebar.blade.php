@@ -4,40 +4,45 @@
   </div>
   <nav x-data="{ isOpen: false }">
       <ul class="p-4 ">
-        <li class="mb-4 ">
+        <li class="mb-4">
           <a href="/dashboard" class="block py-2 px-4 text-white hover:bg-blue-600">
               Dashboard
           </a>
         </li>
         @if(Auth::user()->role == 'kaprodi')
-        <li class="mb-4 ">
+        <li class="mb-4">
           <a href="{{ route('kelola-dosen') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
               Kelola Dosen
           </a>
         </li>
-        <li>
+        <li class="mb-4">
           <a href="{{ route('kelola-kelas') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
             Kelola Kelas
           </a> 
         </li>
-        @elseif(Auth::user()->role == 'dosen wali')
-        <li>
-          <a href="#" class="block py-2 px-4 text-white hover:bg-blue-600">
+        <li class="mb-4">
+          <a href="{{ route('kelola-mahasiswa') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
             Kelola Mahasiswa
           </a> 
         </li>
-        <li>
+        @elseif(Auth::user()->role == 'dosen wali')
+        <li class="mb-4">
+          <a href="{{ route('kelola-mahasiswa') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
+            Kelola Mahasiswa
+          </a> 
+        </li>
+        <li class="mb-4">
           <a href="#" class="block py-2 px-4 text-white hover:bg-blue-600">
             Permintaan Perubahan Data
           </a> 
         </li>
         @elseif(Auth::user()->role == 'mahasiswa')
-        <li>
-          <a href="#" class="block py-2 px-4 text-white hover:bg-blue-600">
+        <li class="mb-4">
+          <a href="/profil" class="block py-2 px-4 text-white hover:bg-blue-600">
             Profil Saya
           </a> 
         </li>
-        <li>
+        <li class="mb-4">
           <a href="#" class="block py-2 px-4 text-white hover:bg-blue-600">
             Ajukan Perubahan Data
           </a> 

@@ -14,13 +14,15 @@ class Kelas extends Model
         'jumlah'
     ];
 
+    public const KAPASITAS_KELAS = 2;
+
     public function dosen()
     {
-        return $this->hasOne(Dosen::class);
+        return $this->hasOne(Dosen::class, 'kelas_id');
     }
 
     public function mahasiswa()
     {
-        return $this->hasMany(Mahasiswa::class);
+        return $this->hasMany(Mahasiswa::class, 'kelas_id');
     }
 }
