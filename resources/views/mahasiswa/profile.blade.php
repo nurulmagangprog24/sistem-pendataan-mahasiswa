@@ -94,16 +94,20 @@
         <p class="w-full px-4 py-2 border rounded-md bg-gray-100">{{ $mahasiswa->tanggal_lahir }}</p>
     </div>
 
-    <!-- Tombol Request Edit -->
-    <form action="{{ route('request.edit') }}" method="POST">
-      @csrf
-      <input type="hidden" name="mahasiswa_id" value="{{ $mahasiswa->id }}">
-      <input type="hidden" name="kelas_id" value="{{ $mahasiswa->kelas_id }}">
-      <input type="hidden" name="keterangan" value="Request untuk edit data profil">
-      
-      <button type="submit" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md">
-          Request Edit ke Dosen
-      </button>
+    <div x-data="{ open: false }">
+    <button type="button" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md" @click="open = true" <!--onclick="openModal('requestEdit') -->">
+        Request Edit ke Dosen
+    </button>
+    
+    @include('form.request-edit', [
+        'modalId' => 'requestEdit',
+        'title' => 'Request Edit Data',
+        'actionUrl' => route('request.store'),
+        'kelas' => $kelas,
+        'isEdit' => false
+    ])
+    
+
   </form>
 </div>
 @endsection

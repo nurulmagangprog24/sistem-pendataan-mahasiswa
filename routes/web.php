@@ -41,8 +41,20 @@ Route::resource('mahasiswa', KelolaMahasiswaController::class);
 Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
 
         
-Route::get('/profil', [ProfileController::class, 'showProfileMhs'])->name('profile-mhs');
-Route::post('/request/edit', [RequestController::class, 'store'])->name('request.edit');
+// Route::post('/request/edit', [RequestController::class, 'store'])->name('request.edit');
+
+Route::middleware(['auth', 'RoleMiddleware:mahasiswa'])->group(function () {
+    Route::get('/profil', [ProfileController::class, 'showProfileMhs'])->name('profile-mhs');
+    Route::get('/request/create', [RequestController::class, 'createRequest'])->name('request.create');
+    Route::post('/request/store', [RequestController::class, 'storeRequest'])->name('request.store');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+Route::middleware(['auth', 'role:dosen wali'])->group(function () {
+    Route::post('/request/approve/{id}', [RequestController::class, 'approveRequest'])->name('request.approve');
+});
+
 
 // Route::group(['middleware' => ['auth', 'role:kaprodi']], function () {
 //     // Rute untuk Kaprodi
