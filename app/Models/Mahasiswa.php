@@ -31,4 +31,9 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Kelas::class);
     }
+
+    public function requests()
+    {
+        return $this->hasMany(RequestEdit::class);
+    }
 }

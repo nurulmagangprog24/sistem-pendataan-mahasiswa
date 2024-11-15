@@ -42,11 +42,6 @@
             Profil Saya
           </a> 
         </li>
-        <li class="mb-4">
-          <a href="#" class="block py-2 px-4 text-white hover:bg-blue-600">
-            Ajukan Perubahan Data
-          </a> 
-        </li>
       @endif
       </ul>
   </nav>
