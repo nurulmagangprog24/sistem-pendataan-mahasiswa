@@ -15,6 +15,20 @@ class RequestController extends Controller
     //     return view('mahasiswa.profile', compact('kelas', 'mahasiswa')); // Blade view for request creation
     // }
 
+    public function index()
+    {
+        // Mendapatkan dosen saat ini
+        $dosen = auth()->user()->dosen;
+
+        // Mendapatkan permintaan dari mahasiswa di kelas dosen
+        $requests = RequestEdit::with('mahasiswa', 'kelas')
+                ->where('kelas_id', $dosen->kelas_id)
+                ->get();
+
+        return view('dosen.requests-list', compact('requests'));
+    }
+
+
     public function storeRequest(Request $request)
     {
         $data = $request->validate([
@@ -31,13 +45,21 @@ class RequestController extends Controller
         return redirect()->back()->with('success', 'Request sent to advisor.');
     }
 
-    public function approveRequest($requestId)
+    public function approve($id)
     {
-        $request = Request::findOrFail($requestId);
-        $mahasiswa = $request->mahasiswa;
-        $mahasiswa->update(['edit' => true]);
+        // Temukan permintaan
+        $request = RequestEdit::findOrFail($id);
 
-        return redirect()->route('request.index')->with('success', 'Student request approved.');
+        // Set mahasiswa `edit` menjadi true
+        $mahasiswa = $request->mahasiswa;
+        $mahasiswa->edit = true;
+        $mahasiswa->save();
+
+        // Hapus permintaan setelah disetujui
+        $request->delete();
+
+        return redirect()->route('requests-list')->with('success', 'Permintaan berhasil disetujui. Mahasiswa dapat mengedit datanya.');
     }
+
     
 }
