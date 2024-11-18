@@ -12,6 +12,13 @@ class KelolaMahasiswaController extends Controller
         $mahasiswa = Mahasiswa::with('kelas')->get();
         $kelas = Kelas::all();
 
+        return view('dosen.kelola-mahasiswa', compact('mahasiswa', 'kelas'));
+    }
+
+    public function listMhs() {
+        $mahasiswa = Mahasiswa::with('kelas')->get();
+        $kelas = Kelas::all();
+
         $dosen = auth()->user()->dosen;
         $mahasiswa = $dosen->kelas ? $dosen->kelas->mahasiswa : collect();
 
@@ -30,7 +37,7 @@ class KelolaMahasiswaController extends Controller
            'kelas_id' => 'nullable|exists:kelas,id',
            'nim' => 'required|unique:mahasiswa,nim,' . $id,
            'name' => 'required|string',
-           'tempat_lahir' => 'reuired|string',
+           'tempat_lahir' => 'required|string',
            'tanggal_lahir' => 'required|date',
        ]);
         

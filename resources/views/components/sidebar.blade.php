@@ -27,7 +27,7 @@
         </li>
         @elseif(Auth::user()->role == 'dosen wali')
         <li class="mb-4">
-          <a href="{{ route('kelola-mahasiswa') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
+          <a href="{{ route('daftar-mahasiswa') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
             Kelola Mahasiswa
           </a> 
         </li>
