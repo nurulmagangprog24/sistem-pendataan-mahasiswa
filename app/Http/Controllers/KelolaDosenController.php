@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class KelolaDosenController extends Controller
 {
-    function showKelolaDosen() {
+    public function dosenList() {
         $dosen = Dosen::with('kelas')->get();
         $kelas = Kelas::whereDoesntHave('dosen')->get();
         return view('kaprodi.kelola-dosen', compact('dosen', 'kelas'));

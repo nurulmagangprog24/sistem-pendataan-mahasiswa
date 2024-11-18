@@ -16,32 +16,27 @@ class ProfileController extends Controller
         return view('mahasiswa.profile', compact('mahasiswa', 'kelas'));
     }
 
-    public function edit()
+    public function editProfilMhs()
     {
         $mahasiswa = auth()->user()->mahasiswa;
-        if (!$mahasiswa->edit) {
-            return redirect()->back()->with('error', 'You do not have permission to edit.');
-        }
 
-        return view('mahasiswa.edit', compact('mahasiswa'));
+        return view('form.edit-data-modal', compact('mahasiswa'));
     }
 
-    public function update(Request $request)
+    public function updateprofilMhs(Request $request)
     {
         $mahasiswa = auth()->user()->mahasiswa;
-        if (!$mahasiswa->edit) {
-            return redirect()->back()->with('error', 'You do not have permission to edit.');
-        }
-
+        
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'nim' => 'required|integer|unique:mahasiswa,nim,' . auth()->user()->mahasiswa->id,
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
         ]);
-
+        
         $mahasiswa->update($validatedData);
         $mahasiswa->update(['edit' => false]);
 
-        return redirect()->route('profile.show')->with('success', 'Profile updated.');
+        return redirect()->route('profile-mhs')->with('success', 'Data berhasil diperbarui.');
     }
 }

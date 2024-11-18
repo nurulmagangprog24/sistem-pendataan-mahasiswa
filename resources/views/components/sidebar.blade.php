@@ -32,7 +32,7 @@
           </a> 
         </li>
         <li class="mb-4">
-          <a href="#" class="block py-2 px-4 text-white hover:bg-blue-600">
+          <a href="{{ route('requests-list') }}" class="block py-2 px-4 text-white hover:bg-blue-600">
             Permintaan Perubahan Data
           </a> 
         </li>
