@@ -15,14 +15,14 @@
             <thead>
                 <tr>
                     <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">No</th>
-                    <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">Nama Mahasiswa</th>
+                    <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">Nama </th>
                     <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">Kelas</th>
                     <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">Keterangan</th>
                     <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">Tanggal</th>
                     <th class="bg-gray-200 text-gray-700 text-left px-4 py-2">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="text-gray-600 text-sm font-light">
+            <tbody class="text-gray-600 text-sm">
                 @forelse($requests as $index => $request)
                     <tr>
                         <td class="px-4 py-2">{{ $index + 1 }}</td>
@@ -33,8 +33,14 @@
                         <td class="px-4 py-2">
                             <form action="{{ route('requests.approve', $request->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                                <button type="submit" class="bg-green-500 text-white py-2 px-3 rounded hover:bg-green-600">
                                     Setujui
+                                </button>
+                            </form>
+                            <form action="{{ route('requests.reject', $request->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+                                    Tolak
                                 </button>
                             </form>
                         </td>

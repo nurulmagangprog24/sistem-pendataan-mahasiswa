@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 class RequestController extends Controller
 {
-    // public function createRequest()
-    // {
-    //     $mahasiswa = auth()->user()->mahasiswa;
-    //     $kelas = $mahasiswa->kelas; 
-    //     return view('mahasiswa.profile', compact('kelas', 'mahasiswa')); // Blade view for request creation
-    // }
-
     public function index()
     {
         // Mendapatkan dosen saat ini
@@ -59,6 +52,18 @@ class RequestController extends Controller
         $request->delete();
 
         return redirect()->route('requests-list')->with('success', 'Permintaan berhasil disetujui. Mahasiswa dapat mengedit datanya.');
+    }
+
+    public function reject($id)
+    {
+        $request = RequestEdit::findOrFail($id);
+
+        $request->delete();
+
+        // session()->flash('request_rejected', 'Permintaan edit data Anda telah ditolak.');
+
+        // Beri respons sukses
+        return redirect()->back()->with('success', 'Request berhasil ditolak.');
     }
 
     

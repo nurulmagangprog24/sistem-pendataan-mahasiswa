@@ -4,6 +4,13 @@
 <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg p-8 mt-10">
     <h2 class="text-2xl font-semibold text-gray-700 mb-6">Profil Pengguna</h2>
 
+    <!-- Flash Message Jika Request Ditolak -->
+    @if(session('request_rejected'))
+        <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
+            {{ session('request_rejected') }}
+        </div>
+    @endif
+
     <!-- Profile Picture -->
     {{-- <div class="mb-4 text-center">
         <img src="{{ asset('images/profile-placeholder.png') }}" alt="Foto Profil" class="w-32 h-32 rounded-full mx-auto mb-4">
@@ -46,7 +53,7 @@
     @else
         <!-- If student is not allowed to edit, show the "Request Edit" button -->
         <div x-data="{ openRequestModal: false }">
-            <button type="button" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md" @click="open = true">
+            <button type="button" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md" @click="openRequestModal = true">
                 Request Edit ke Dosen
             </button> 
             @include('form.request-edit', [

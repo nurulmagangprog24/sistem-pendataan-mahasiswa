@@ -28,28 +28,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'logout']);
 });
+Route::resource('kelas', KelolaKelasController::class);
+Route::resource('dosen', KelolaDosenController::class);
+Route::resource('mahasiswa', KelolaMahasiswaController::class);
 
 Route::middleware(['auth', 'role:kaprodi'])->group(function () {
     Route::get('/kelola-dosen', [KelolaDosenController::class, 'dosenList'])->name('kelola-dosen');
     Route::get('/kelola-kelas', [KelolaKelasController::class, 'kelasList'])->name('kelola-kelas');
     Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
 });
-
-// Route::resource('kelas', KelolaKelasController::class);
-// Route::resource('dosen', KelolaDosenController::class);
-Route::resource('mahasiswa', KelolaMahasiswaController::class);
-
-// Route::middleware(['auth', 'role:dosen wali'])->group(function () {
-    //     Route::get('/requests', [DosenController::class, 'listRequests'])->name('requests-list');
-    // });
-    
     
 Route::middleware(['auth', 'role:dosen wali'])->group(function () {
-    Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
+    Route::get('/daftar-mahasiswa', [KelolaMahasiswaController::class, 'listMhs'])->name('daftar-mahasiswa');
     Route::get('/requests', [RequestController::class, 'index'])->name('requests-list');
     Route::post('/requests/{id}/approve', [RequestController::class, 'approve'])->name('requests.approve');
+    Route::post('/requests/{id}/reject', [RequestController::class, 'reject'])->name('requests.reject');
 });
-
 
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/profil', [ProfileController::class, 'showProfileMhs'])->name('profile-mhs');

@@ -7,11 +7,11 @@
             <!-- Dosen Widgets -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Mahasiswa di Bimbingan</h2>
-                <p class="text-gray-600">10 Mahasiswa</p>
+                <p class="text-gray-600">{{ $jumlahMahasiswa }}</p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Permintaan Perubahan Data</h2>
-                <p class="text-gray-600">2 Permintaan</p>
+                <p class="text-gray-600">{{ $jumlahPermintaan }}</p>
             </div>
     </div>
 </div>

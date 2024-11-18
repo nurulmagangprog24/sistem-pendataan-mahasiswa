@@ -1,5 +1,5 @@
 <!-- Modal request edit data-->
-<div x-show="openRequestModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black bg-opacity-50" @click.away="open = false">
+<div x-show="openRequestModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black bg-opacity-50">
     <div class="align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
       
       <!-- Form Request -->
@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex justify-end space-x-4 mt-4">
-              <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md" @click="open = false">Cancel</button>
+              <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md" @click="openRequestModal = false">Cancel</button>
               <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Submit Request</button>
             </div>
         </div>
