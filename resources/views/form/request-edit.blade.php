@@ -1,5 +1,5 @@
 <!-- Modal request edit data-->
-<div x-show="open" x-transition class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black bg-opacity-50" @click.away="open = false">
+<div x-show="openRequestModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black bg-opacity-50" @click.away="open = false">
     <div class="align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
       
       <!-- Form Request -->

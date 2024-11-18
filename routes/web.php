@@ -53,10 +53,9 @@ Route::middleware(['auth', 'role:dosen wali'])->group(function () {
 
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/profil', [ProfileController::class, 'showProfileMhs'])->name('profile-mhs');
-    // Route::get('/request/create', [RequestController::class, 'createRequest'])->name('request.create');
-    // Route::post('/request/store', [RequestController::class, 'storeRequest'])->name('request.store');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/request/store', [RequestController::class, 'storeRequest'])->name('request.store');
+    Route::get('/profile/edit', [ProfileController::class, 'editProfilMhs'])->name('profile-mhs.edit');
+    Route::put('/profile', [ProfileController::class, 'updateProfilMhs'])->name('profile.update');
 });
 
 
