@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function showProfileMhs() {
+    public function index() {
 
         $mahasiswa = auth()->user()->mahasiswa;
 
@@ -16,14 +16,14 @@ class ProfileController extends Controller
         return view('mahasiswa.profile', compact('mahasiswa', 'kelas'));
     }
 
-    public function editProfilMhs()
+    public function edit()
     {
         $mahasiswa = auth()->user()->mahasiswa;
 
         return view('form.edit-data-modal', compact('mahasiswa'));
     }
 
-    public function updateprofilMhs(Request $request)
+    public function update(Request $request)
     {
         $mahasiswa = auth()->user()->mahasiswa;
         

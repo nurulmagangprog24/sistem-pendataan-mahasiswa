@@ -22,7 +22,7 @@ class RequestController extends Controller
     }
 
 
-    public function storeRequest(Request $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'kelas_id' => 'required|exists:kelas,id',

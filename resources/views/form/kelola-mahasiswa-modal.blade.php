@@ -36,12 +36,12 @@
                   </div>
 
                   <div class="mt-4 text-left">
-                      <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Nama</label>
+                      <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
                       <input type="text" name="tempat_lahir" id="tempat_lahir" value="{{ $mahasiswa->tempat_lahir ?? '' }}" class="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 sm:text-sm">
                   </div>
                   
                   <div class="mt-4 text-left">
-                      <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Nama</label>
+                      <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
                       <input type="text" name="tanggal_lahir" id="tanggal_lahir" value="{{ $mahasiswa->tanggal_lahir ?? '' }}" class="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 sm:text-sm">
                   </div>
                 </div>

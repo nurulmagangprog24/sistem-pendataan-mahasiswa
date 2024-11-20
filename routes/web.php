@@ -32,24 +32,24 @@ Route::resource('kelas', KelolaKelasController::class);
 Route::resource('dosen', KelolaDosenController::class);
 Route::resource('mahasiswa', KelolaMahasiswaController::class);
 
-Route::middleware(['auth', 'role:kaprodi'])->group(function () {
-    Route::get('/kelola-dosen', [KelolaDosenController::class, 'dosenList'])->name('kelola-dosen');
-    Route::get('/kelola-kelas', [KelolaKelasController::class, 'kelasList'])->name('kelola-kelas');
+Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function () {
+    Route::get('/kelola-dosen', [KelolaDosenController::class, 'index'])->name('kelola-dosen');
+    Route::get('/kelola-kelas', [KelolaKelasController::class, 'index'])->name('kelola-kelas');
     Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
 });
     
-Route::middleware(['auth', 'role:dosen wali'])->group(function () {
-    Route::get('/daftar-mahasiswa', [KelolaMahasiswaController::class, 'listMhs'])->name('daftar-mahasiswa');
+Route::prefix('dosen')->middleware(['auth', 'role:dosen wali'])->group(function () {
+    Route::get('/kelas', [KelolaMahasiswaController::class, 'listMhs'])->name('kelas');
     Route::get('/requests', [RequestController::class, 'index'])->name('requests-list');
     Route::post('/requests/{id}/approve', [RequestController::class, 'approve'])->name('requests.approve');
     Route::post('/requests/{id}/reject', [RequestController::class, 'reject'])->name('requests.reject');
 });
 
-Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
-    Route::get('/profil', [ProfileController::class, 'showProfileMhs'])->name('profile-mhs');
-    Route::post('/request/store', [RequestController::class, 'storeRequest'])->name('request.store');
-    Route::get('/profile/edit', [ProfileController::class, 'editProfilMhs'])->name('profile-mhs.edit');
-    Route::put('/profile', [ProfileController::class, 'updateProfilMhs'])->name('profile.update');
+Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->group(function () {
+    Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
+    Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
+    Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [ProfileController::class, 'update'])->name('profil.update');
 });
 
 

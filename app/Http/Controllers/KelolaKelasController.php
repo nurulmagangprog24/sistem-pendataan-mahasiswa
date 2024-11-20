@@ -9,22 +9,25 @@ use Illuminate\Http\Request;
 
 class KelolaKelasController extends Controller
 {
-    public function kelasList()
+    public function index()
     {
-        $kelas = Kelas::withCount('mahasiswa')->get();
-        return view('kaprodi.kelola-kelas', compact('kelas'));
+        $dosen = Dosen::whereDoesntHave('kelas')->get();
+        $kelas = Kelas::with('dosen', 'mahasiswa')->withCount('mahasiswa')->get();
+        $mahasiswa = []; // Default sebagai array kosong
+    
+        // Ambil data mahasiswa untuk semua kelas (opsional)
+        foreach ($kelas as $item) {
+            $mahasiswa[$item->id] = $item->mahasiswa()->get(); // Ambil mahasiswa berdasarkan kelas
+        }
+        return view('kaprodi.kelola-kelas', compact('dosen', 'kelas', 'mahasiswa'));
     }
-
-    // public function create()
-    // {
-    //     return view('kelas.create');
-    // }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|unique:kelas,name',
-            'jumlah' => 'required|integer|min:1'
+            'jumlah' => 'required|integer|min:1',
+            'dosen_id' => 'required|exists:dosens,id',
         ]);
 
         Kelas::create($validatedData);

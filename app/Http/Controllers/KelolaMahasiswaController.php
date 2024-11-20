@@ -47,7 +47,7 @@ class KelolaMahasiswaController extends Controller
         $kelas = Kelas::findOrFail($request->kelas_id);
 
         // Periksa apakah jumlah mahasiswa di kelas sudah mencapai batas maksimal
-        if ($kelas->mahasiswa()->count() >= Kelas::KAPASITAS_KELAS) {
+        if ($kelas->mahasiswa()->count() >= $kelas->jumlah) {
             return redirect()->back()->withErrors(['msg' => 'Jumlah mahasiswa di kelas ini telah mencapai batas maksimal.']);
         }
     }
