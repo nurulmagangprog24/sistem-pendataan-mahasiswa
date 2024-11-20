@@ -3,7 +3,13 @@
   <h2 class="text-2xl font-bold text-gray-700 mb-6 ">Daftar Mahasiswa Kelas {{ $kelas->name }}</h2>
     <div class="mb-4">
         <!-- Button untuk membuka modal Tambah Mahasiswa -->
-        {{-- <button class="bg-blue-600 text-white py-2 px-4 rounded">Tambah Mahasiswa</button> --}}
+        <div x-data="{ openAddModal: false }">
+            <button @click="openAddModal = true" class="bg-green-600 text-white py-2 px-4 rounded">Tambah Mahasiswa</button>
+            @include('form.plot-mahasiswa-modal', [
+                'availableMahasiswa' => $availableMahasiswa,
+                'kelas' => $kelas,
+            ])
+        </div>        
         <button @click="openDetailModal = false" class="bg-blue-600 text-white py-2 px-4 rounded">Tutup</button>
     </div>
 

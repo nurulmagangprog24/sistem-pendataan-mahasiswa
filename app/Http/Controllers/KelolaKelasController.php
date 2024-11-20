@@ -6,20 +6,21 @@ use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
-
 class KelolaKelasController extends Controller
 {
     public function index()
     {
         $dosen = Dosen::whereDoesntHave('kelas')->get();
         $kelas = Kelas::with('dosen', 'mahasiswa')->withCount('mahasiswa')->get();
-        $mahasiswa = []; // Default sebagai array kosong
+        $availableMahasiswa = Mahasiswa::whereNull('kelas_id')->get();
+        
+        $mahasiswa = []; 
     
         // Ambil data mahasiswa untuk semua kelas (opsional)
         foreach ($kelas as $item) {
             $mahasiswa[$item->id] = $item->mahasiswa()->get(); // Ambil mahasiswa berdasarkan kelas
         }
-        return view('kaprodi.kelola-kelas', compact('dosen', 'kelas', 'mahasiswa'));
+        return view('kaprodi.kelola-kelas', compact('dosen', 'kelas', 'mahasiswa', 'availableMahasiswa'));
     }
 
     public function store(Request $request)
@@ -33,6 +34,20 @@ class KelolaKelasController extends Controller
         Kelas::create($validatedData);
         return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan');
     }
+
+    public function addMahasiswa(Request $request, Kelas $kelas)
+    {
+        // $request->validate([
+        //     'mahasiswa_id' => 'required|exists:mahasiswa,id',
+        // ]);
+
+        $mahasiswa = Mahasiswa::findOrFail($request->mahasiswa_id);
+        $mahasiswa->kelas_id = $kelas->id;
+        $mahasiswa->save();
+
+        return redirect()->back()->with('success', 'Mahasiswa berhasil ditambahkan ke kelas.');
+    }
+
 
     // public function edit($id)
     // {

@@ -10,13 +10,14 @@
   <title>Halaman Dashboard</title>
 </head>
 <body class="bg-gray-100">
-    <div class="flex">
+    <div class="flex h-screen w-full">
       <x-sidebar></x-sidebar>
         <main class="flex-1">
           <x-header></x-header>
-          <section>
+          <section >
             @yield('content')
           </section>
+        </main>
     </div>
 </body>
 </html>
