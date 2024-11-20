@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class DosenController extends Controller
 {
-    public function listRequests()
+    public function index()
     {
         $user = auth()->user(); // Dapatkan data user yang login
         $dosen = Dosen::where('user_id', $user->id)->first(); // Ambil data dosen berdasarkan user

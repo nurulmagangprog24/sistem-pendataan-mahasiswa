@@ -18,6 +18,7 @@ class RoleMiddleware
         if(auth()->user()->role == $role) {
             return $next($request);
         }
-        return redirect('dashboard');
+        // return redirect('dashboard');
+        return abort(403, 'Anda tidak memiliki akses ke halaman ini');
     }
 }
