@@ -9,7 +9,7 @@
 
     <div class="container mx-auto p-4">
         <h2 class="text-2xl font-bold text-gray-700 mb-6">Daftar Kelas</h2>
-        <div x-data="{ openCreateModal : false}" class="mb-4">
+        <div x-data="{ openCreateModal : false}" x-cloak class="mb-4">
            <!-- Button untuk membuka modal Tambah Kelas -->
             <button class="bg-blue-600 text-white py-2 px-4 rounded" @click="openCreateModal = true">Buat Kelas</button>
             @include('form.tambah-kelas-modal', [
@@ -42,7 +42,7 @@
                         <td class="px-5 py-3">{{ $item->jumlah }}</td>
                         <td class="px-5 py-3">{{ $item->mahasiswa_count }}</td>
                         <td class="px-5 py-3">
-                            <div x-data="{ openDetailModal: false}">
+                            <div x-data="{ openDetailModal: false}" x-cloak>
                                 <button type="button" @click="openDetailModal = true" class="px-5 py-2 rounded-md bg-yellow-600 text-white hover:underline">Lihat Detail</button>
                                 @include('form.detail-kelas-modal', [
                                     'mahasiswa' => $mahasiswa[$item->id] ?? [],
@@ -51,11 +51,15 @@
                                 ])
                             </div>
                             <a href="{{-- route('kaprodi.kelas.edit', $k->id) --}}" class="px-5 py-2 rounded-md bg-blue-600 text-white hover:underline">Edit</a>
-                            <form action="{{-- route('kaprodi.kelas.destroy', $k->id) --}}" method="POST" class="inline-block">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="px-3 py-1.5 rounded bg-red-500 text-white hover:underline">Hapus</button>
-                            </form>
+                            <div x-data="{ openDeleteModal : false}" x-cloak class="mb-4">
+                                <!-- Button untuk membuka modal Tambah Kelas -->
+                                <button type="button" class="bg-red-600 text-white py-2 px-4 rounded-md" @click="openDeleteModal = true">Hapus</button>
+                                    @include('form.hapus-modal', [
+                                        'actionUrl' => route('kelas.destroy', $item->id),
+                                        'modalTitle' => 'Hapus Kelas',
+                                        'itemName' => $item->name,
+                                 ])
+                            </div>
                         </td>
                     </tr>
                     @endforeach

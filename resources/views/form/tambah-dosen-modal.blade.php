@@ -1,4 +1,4 @@
-<div id="{{ $modalId }}" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div x-show="editDosanModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
       <div class="fixed inset-0 transition-opacity" aria-hidden="true">
           <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -48,7 +48,7 @@
                   <button type="submit" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 sm:w-auto sm:text-sm">
                       Simpan
                   </button>
-                  <button type="button" onclick="closeModal('{{ $modalId }}')" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
+                  <button type="button" @click="editDosenModal = false" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
                       Batal
                   </button>
               </div>
@@ -56,14 +56,3 @@
       </div>
   </div>
 </div>
-
-<script>
-  function openModal(modalId) {
-      document.getElementById(modalId).classList.remove('hidden');
-  }
-
-  function closeModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
-  }
-</script>
-

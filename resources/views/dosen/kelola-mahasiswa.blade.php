@@ -40,11 +40,15 @@
                         'kelas' => $kelas,
                         'isEdit' => true
                     ])
-                    <form action="{{-- route('kaprodi.dosen.destroy', $d->id) --}}" method="POST" class="inline-block">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="px-3 py-1.5 rounded bg-red-500 text-white hover:underline">Delete</button>
-                    </form>
+                    <div x-data="{ openDeleteModal : false}" class="mb-4">
+                        <!-- Button untuk membuka modal Tambah Kelas -->
+                        <button type="button" class="bg-red-600 text-white py-2 px-4 rounded-md" @click="openDeleteModal = true">Hapus</button>
+                            @include('form.hapus-modal', [
+                                'actionUrl' => route('mahasiswa.destroy', $mhs->id),
+                                'modalTitle' => 'Hapus Mahasiswa',
+                                'itemName' => $mhs->name,
+                         ])
+                    </div>
                 </td>
             </tr>
             @endforeach

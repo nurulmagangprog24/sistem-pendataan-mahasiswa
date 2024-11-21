@@ -74,10 +74,10 @@ class KelolaDosenController extends Controller
        return redirect()->route('kelola-dosen')->with('success', 'Data dosen berhasil diperbarui');
     }
 
-    // public function destroy($id)
-    // {
-    //     $dosen = Dosen::findOrFail($id);
-    //     $dosen->delete();
-    //     return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil dihapus');
-    // }
+    public function destroy($id)
+    {
+        $dosen = Dosen::findOrFail($id);
+        $dosen->delete();
+        return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil dihapus');
+    }
 }
