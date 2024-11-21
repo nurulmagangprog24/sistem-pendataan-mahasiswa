@@ -37,6 +37,8 @@ Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function (
     Route::get('/kelola-kelas', [KelolaKelasController::class, 'index'])->name('kelola-kelas');
     Route::post('/kelola-kelas/{kelas}/tambah-mahasiswa', [KelolaKelasController::class, 'addMahasiswa'])->name('kelola-kelas.tambahMahasiswa');
     Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
+    Route::delete('/dosen/{id}', [KelolaDosenController::class, 'destroy'])->name('kelola-dosen.hapus');     
+    Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
 });
     
 Route::prefix('dosen')->middleware(['auth', 'role:dosen wali'])->group(function () {

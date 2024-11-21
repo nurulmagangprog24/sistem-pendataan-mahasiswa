@@ -57,4 +57,12 @@ class KelolaMahasiswaController extends Controller
          
        return redirect()->route('kelola-mahasiswa')->with('success', 'Data dosen berhasil diperbarui');
     }
+
+    public function destroy($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa->delete();
+        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus');
+    }
 }
+

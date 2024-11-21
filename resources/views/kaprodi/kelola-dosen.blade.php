@@ -5,7 +5,8 @@
     <h2 class="text-2xl font-bold text-gray-700 mb-6 ">Daftar Dosen</h2>
     {{-- <div class="mb-4">
         <!-- Button untuk membuka modal Tambah Dosen -->
-        <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded" onclick="openModal('createDosenModal')">Tambah Dosen</button>
+        
+        <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded" @click="createDosenModal = true">Tambah Dosen</button>
         @include('form.tambah-dosen-modal', [
             'modalId' => 'createDosenModal',
             'title' => 'Tambah Dosen',
@@ -37,20 +38,25 @@
                 <td class="px-5 py-3">{{ $dsn->name }}</td>
                 <td class="px-5 py-3">{{ $dsn->kelas->name ?? '-' }}</td>
                 <td class="px-5 py-3">
-                    <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" onclick="openModal('editDosenModal_{{ $dsn->id }}')">Edit</button>
+                    <div x-data="{ editDosenModal : false}" x-cloak class="mb-4">
+                    <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" @click="editDosenModal = true">Edit</button>
                     @include('form.tambah-dosen-modal', [
-                        'modalId' => 'editDosenModal_' . $dsn->id,
                         'title' => 'Edit Dosen',
                         'actionUrl' => route('dosen.update', $dsn->id),
                         'dosen' => $dsn,
                         'kelas' => $kelas,
                         'isEdit' => true
                     ])
-                    <form action="{{-- route('kaprodi.dosen.destroy', $d->id) --}}" method="POST" class="inline-block">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="px-3 py-1.5 rounded bg-red-500 text-white hover:underline">Delete</button>
-                    </form>
+                    <div x-data="{ openDeleteModal : false}" x-cloak class="mb-4">
+                        <!-- Button untuk membuka modal Tambah Kelas -->
+                        <button type="button" class="bg-red-600 text-white py-2 px-4 rounded-md" @click="openDeleteModal = true">Hapus</button>
+                            @include('form.hapus-modal', [
+                            'actionUrl' => route('dosen.destroy', $dsn->id),
+                             'modalTitle' => 'Hapus Dosen',
+                             'itemName' => $dsn->name,
+                             'kelas' => $kelas,
+                         ])
+                    </div>
                 </td>
             </tr>
             @endforeach

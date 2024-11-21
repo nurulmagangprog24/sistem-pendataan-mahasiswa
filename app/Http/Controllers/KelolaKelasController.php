@@ -71,12 +71,13 @@ class KelolaKelasController extends Controller
     //     return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diperbarui');
     // }
 
-    // public function destroy($id)
-    // {
-    //     $kelas = Kelas::findOrFail($id);
-    //     $kelas->delete();
-    //     return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus');
-    // }
+    public function destroy($id)
+    {
+        $kelas = Kelas::findOrFail($id);
+        $kelas->delete();
+
+        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus');
+    }
 
     // // Plotting mahasiswa dan dosen ke kelas
     // public function plot(Request $request, $id)
