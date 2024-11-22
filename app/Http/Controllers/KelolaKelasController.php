@@ -28,7 +28,7 @@ class KelolaKelasController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|unique:kelas,name',
             'jumlah' => 'required|integer|min:1',
-            'dosen_id' => 'required|exists:dosens,id',
+            'dosen_id' => 'exists:dosens,id',
         ]);
 
         Kelas::create($validatedData);

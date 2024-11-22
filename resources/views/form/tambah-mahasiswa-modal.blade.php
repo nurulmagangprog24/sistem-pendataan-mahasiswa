@@ -1,4 +1,4 @@
-<div x-show="createDosenModal" x-transition class="fixed inset-0 z-50 overflow-y-auto">
+<div x-show="createMahasiswaModal" x-transition class="fixed inset-0 z-50 overflow-y-auto">
   <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
       <div class="fixed inset-0 transition-opacity" aria-hidden="true">
           <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -7,7 +7,7 @@
       <div class="inline-block align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           
           <!-- form untuk edit data -->
-          <form action="{{ route('dosen.store') }}" method="POST">
+          <form action={{ $actionUrl }} method="POST">
               @csrf
               <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                   <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">{{ $title }}</h3>
@@ -33,15 +33,20 @@
                     <input id="password" type="password" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" name="password" required>
                 </div>
 
-                  <div class="mt-4 text-left">
-                      <label for="kode_dosen" class="block text-sm font-medium text-gray-700">Kode Dosen</label>
-                      <input type="text" name="kode_dosen" id="kode_dosen" class="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 sm:text-sm">
-                  </div>
-
-                  <div class="mt-4 text-left">
-                      <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
-                      <input type="text" name="nip" id="nip" class="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500 sm:text-sm">
-                  </div>
+                <div class="mt-4 text-left">
+                  <label for="nim" class="block text-sm font-medium text-gray-700">NIM</label>
+                  <input id="nim" type="text" name="nim" class="w-full px-2 py-2 border rounded-md focus:outline-none">
+                </div>
+              
+                <div class="mt-4 text-left">
+                  <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir      </label>
+                  <input id="tempat_lahir" type="text" name="tempat_lahir" class="w-full px-2 py-2 border rounded-md focus:outline-none">
+                </div>
+              
+                <div class="mt-4 text-left">
+                  <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir      </label>
+                  <input id="tanggal_lahir" type="date" name="tanggal_lahir" class="w-full px-2 py-2 border rounded-md focus:outline-none">
+                </div>
 
                   <div class="mt-4 text-left">
                       <label for="kelas_id" class="block text-sm font-medium text-gray-700">Kelas</label>
@@ -58,7 +63,7 @@
                   <button type="submit" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 sm:w-auto sm:text-sm">
                       Simpan
                   </button>
-                  <button type="button" @click="createDosenModal = false" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
+                  <button type="button" @click="createMahasiswaModal = false" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
                       Batal
                   </button>
               </div>

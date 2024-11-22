@@ -34,6 +34,7 @@ Route::resource('mahasiswa', KelolaMahasiswaController::class);
 
 Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function () {
     Route::get('/kelola-dosen', [KelolaDosenController::class, 'index'])->name('kelola-dosen');
+    Route::post('/kelola-dosen/store', [KelolaDosenController::class, 'store'])->name('dosen.store');
     Route::get('/kelola-kelas', [KelolaKelasController::class, 'index'])->name('kelola-kelas');
     Route::post('/kelola-kelas/{kelas}/tambah-mahasiswa', [KelolaKelasController::class, 'addMahasiswa'])->name('kelola-kelas.tambahMahasiswa');
     Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
