@@ -21,25 +21,25 @@
         <table class="min-w-full overflow-scroll bg-white leading-normal">
         <thead>
             <tr>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">No</th>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">NIM</th>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">Nama</th>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">Kelas</th>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">Tempat Lahir</th>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">Tanggal Lahir</th>
-                <th class="px-5 py-3 bg-gray-200 text-gray-700 text-left">Aksi</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">No</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">NIM</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">Nama</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">Kelas</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">Tempat Lahir</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">Tanggal Lahir</th>
+                <th class="px-3 py-1 bg-gray-200 text-gray-700 text-left">Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($mahasiswa as $mhs)
             <tr>
-                <td class="px-5 py-3">{{ $loop->iteration }}</td>
-                <td class="px-5 py-3">{{ $mhs->nim }}</td>
-                <td class="px-5 py-3">{{ $mhs->name }}</td>
-                <td class="px-5 py-3">{{ $mhs->kelas->name ?? '-' }}</td>
-                <td class="px-5 py-3">{{ $mhs->tempat_lahir }}</td>
-                <td class="px-5 py-3">{{ $mhs->tanggal_lahir }}</td>
-                <td class="px-5 py-3">
+                <td class="px-3 py-1">{{ $loop->iteration }}</td>
+                <td class="px-3 py-1">{{ $mhs->nim }}</td>
+                <td class="px-3 py-1">{{ $mhs->name }}</td>
+                <td class="px-3 py-1">{{ $mhs->kelas->name ?? '-' }}</td>
+                <td class="px-3 py-1">{{ $mhs->tempat_lahir }}</td>
+                <td class="px-3 py-1">{{ $mhs->tanggal_lahir }}</td>
+                <td class="px-3 py-1">
                     <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" onclick="openModal('editMahasiswa_{{ $mhs->id }}')">Edit</button>
                     @include('form.kelola-mahasiswa-modal', [
                         'modalId' => 'editMahasiswa_' . $mhs->id,

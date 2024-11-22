@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold text-gray-700 mb-6">Tambah Mahasiswa ke Kelas {{ $kelas->name }}</h2>
     <form method="POST" action="{{ route('kelola-kelas.tambahMahasiswa', $kelas->id) }}">
       @csrf
-      <label for="mahasiswa" class="block text-gray-700">Pilih Mahasiswa</label>
+      <label for="mahasiswa" class="block text-gray-700 mb-3">Pilih Mahasiswa</label>
       <select name="mahasiswa_id" id="mahasiswa" class="block w-full border-gray-300 rounded-md shadow-sm">
         @foreach ($availableMahasiswa as $mhs)
           <option value="{{ $mhs->id }}">{{ $mhs->name }} ({{ $mhs->nim }})</option>
