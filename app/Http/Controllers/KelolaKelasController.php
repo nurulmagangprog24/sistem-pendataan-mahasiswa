@@ -58,18 +58,19 @@ class KelolaKelasController extends Controller
     //     return view('kelas.edit', compact('kelas', 'dosen', 'mahasiswa'));
     // }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $kelas = Kelas::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $kelas = Kelas::findOrFail($id);
 
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|unique:kelas,name,' . $kelas->id,
-    //         'jumlah' => 'required|integer|min:1'
-    //     ]);
+        $validatedData = $request->validate([
+            'name' => 'required|string|unique:kelas,name,' . $kelas->id,
+            'jumlah' => 'required|integer|min:1',
+            'dosen_id' => 'exists:dosens,id',
+        ]);
 
-    //     $kelas->update($validatedData);
-    //     return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diperbarui');
-    // }
+        $kelas->update($validatedData);
+        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diperbarui');
+    }
 
     public function destroy($id)
     {

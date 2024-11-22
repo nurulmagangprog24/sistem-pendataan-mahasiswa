@@ -1,7 +1,7 @@
 <!-- Modal Tambah/Edit Kelas -->
 <div x-show="openCreateModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
     <div class="inline-block align-bottom bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <form action="{{ route('kelas.store') }}" method="POST">
+            <form action="{{ $isEdit ? route('kelas.update', $kelas->id) : route('kelas.store') }}" method="POST">
                 @csrf 
                 @if($isEdit)
                     @method('PUT')
@@ -27,11 +27,11 @@
                           @endforeach
                         </select>
                       </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <div class="bg-gray-50 px-4 py-3 gap-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <button type="submit" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 sm:w-auto sm:text-sm">
                             Simpan
                         </button>
-                        <button type="button" @click="openCreateModal = false" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
+                        <button type="button" @click="openCreateModal = false" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
                             Batal
                         </button>
                     </div>

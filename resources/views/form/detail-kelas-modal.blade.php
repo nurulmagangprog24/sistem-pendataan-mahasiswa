@@ -1,17 +1,17 @@
 <div x-show="openDetailModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-lg shadow-lg ">  
-  <h2 class="text-2xl font-bold text-gray-700 mb-6 ">Daftar Mahasiswa Kelas {{ $kelas->name }}</h2>
-    <div class="mb-4">
+    <div class="bg-white p-6 rounded-lg shadow-lg ">  
+        <div class="flex justify-between mb-4">
+            <h2 class="text-2xl font-bold text-gray-700 ">Daftar Mahasiswa Kelas {{ $kelas->name }}</h2>
+            <button @click="openDetailModal = false" class="border border-slate-400 rounded px-2">X</button>
+        </div>
         <!-- Button untuk membuka modal Tambah Mahasiswa -->
-        <div x-data="{ openAddModal: false } x-cloak">
-            <button @click="openAddModal = true" class="bg-green-600 text-white py-2 px-4 rounded">Tambah Mahasiswa</button>
+        <div class="min-w-full">
+            <button @click="openAddModal = true" class="bg-green-600 text-white py-2 px-4 rounded flex mb-4 hover:underline">Tambah Mahasiswa</button>
             @include('form.plot-mahasiswa-modal', [
+                'kelas' => $item,
                 'availableMahasiswa' => $availableMahasiswa,
-                'kelas' => $kelas,
             ])
-        </div>        
-        <button @click="openDetailModal = false" class="bg-blue-600 text-white py-2 px-4 rounded">Tutup</button>
-    </div>
+        </div>       
 
     <div class="flex h-full min-w-full flex-col justify-between overflow-hidden rounded-lg shadow-lg">
         <table class="min-w-full overflow-scroll bg-white leading-normal">
