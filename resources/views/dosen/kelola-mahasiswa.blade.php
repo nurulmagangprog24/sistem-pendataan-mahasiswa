@@ -3,9 +3,18 @@
 @section('content')
 <div class="container mx-auto p-4">
     <h2 class="text-2xl font-bold text-gray-700 mb-6 ">Daftar Mahasiswa</h2>
-    <div class="mb-4">
-        <!-- Button untuk membuka modal Tambah Mahasiswa -->
-        <button class="bg-blue-600 text-white py-2 px-4 rounded">Tambah Mahasiswa</button>
+    <div x-data="{ createMahasiswaModal : false}" x-cloak class="mb-4">
+        <!-- Button untuk membuka modal Tambah Dosen -->
+        <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" @click="createMahasiswaModal = true">
+            Tambah Mahasiswa
+        </button>
+            @include('form.tambah-mahasiswa-modal', [
+                'title' => 'Tambah Mahasiswa',
+                'actionUrl' => route('mahasiswa.store'),
+                'mahasiswa' => null,
+                'kelas' => $kelas,
+                'isEdit' => false
+            ])
     </div>
 
     <div class="flex h-full min-w-full flex-col justify-between overflow-hidden rounded-lg shadow-lg">

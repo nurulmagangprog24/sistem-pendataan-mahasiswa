@@ -18,7 +18,7 @@
                     </div>
                     <div class="mt-4 text-left">
                         <label for="dosen_id" class="block text-sm font-medium text-gray-700">Pilih Dosen</label>
-                        <select name="dosen_id" id="dosen_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        <select name="dosen_id" id="dosen_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                           <option value="" disabled selected>-- Pilih Dosen --</option>
                           @foreach($dosen as $dsn)
                             <option value="{{ $dsn->id }}" {{ isset($kelas) && $kelas->dosen_id == $dosen->id ? 'selected' : '' }}>

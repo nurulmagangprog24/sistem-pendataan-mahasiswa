@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class KelolaDosenController extends Controller
 {
@@ -15,42 +17,38 @@ class KelolaDosenController extends Controller
         return view('kaprodi.kelola-dosen', compact('dosen', 'kelas'));
     }
 
-    // public function createDosen(Request $request) {
-    //     // Validasi data
-    //     $request->validate([
-    //         'user_id' => 'required|exists:users,id',
-    //         'kelas_id' => 'required|exists:kelas,id',
-    //         'kode_dosen' => 'required|unique:dosen,kode_dosen',
-    //         'nip' => 'required|unique:dosen,nip',
-    //         'name' => 'required|string|max:255',
-    //     ]);
+    public function store(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'username' => 'required|string|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'kode_dosen' => 'required|integer|unique:dosen,kode_dosen',
+            'nip' => 'required|integer|unique:dosen,nip',
+            'kelas_id' => 'nullable|exists:kelas,id',
+        ]);
 
-    //     // // Simpan data dosen
-    //     // Dosen::create([
-    //     //     'kode_dosen' => $request->kode_dosen,
-    //     //     'nip' => $request->nip,
-    //     //     'name' => $request->name,
-    //     // ]);
-    //     Dosen::create($request->all());
+        // Proses penyimpanan data
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'dosen wali',
+            ]);
 
-    //     // Redirect atau response sesuai kebutuhan
-    //     return redirect()->back()->with('success', 'Data Dosen berhasil ditambahkan');
-    // }
-    
+            Dosen::create([
+                'user_id' => $user->id,
+                'kelas_id' => $request->kelas_id ?? null,
+                'kode_dosen' => $request->kode_dosen,
+                'nip' => $request->nip,
+                'name' => $request->username,
+            ]);
+        });
 
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'user_id' => 'required|exists:users,id',
-    //         'kelas_id' => 'nullable|exists:kelas,id',
-    //         'kode_dosen' => 'required|unique:dosen,kode_dosen',
-    //         'nip' => 'required|unique:dosen,nip',
-    //         'name' => 'required|string'
-    //     ]);
-
-    //     Dosen::create($validatedData);
-    //     return redirect()->route('kelola-dosen')->with('success', 'Dosen berhasil ditambahkan');
-    // }
+        return redirect()->route('kelola-dosen')->with('success', 'Dosen berhasil ditambahkan');
+    }
 
     public function edit($id)
     {

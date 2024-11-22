@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Mahasiswa;
+use App\Models\User;
 use App\Models\Kelas;
+use App\Models\Mahasiswa;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class KelolaMahasiswaController extends Controller
 {
@@ -23,6 +26,41 @@ class KelolaMahasiswaController extends Controller
         $mahasiswa = $dosen->kelas ? $dosen->kelas->mahasiswa : collect();
 
         return view('dosen.kelola-mahasiswa', compact('mahasiswa', 'kelas'));
+    }
+
+    public function store(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'username' => 'required|string|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'nim' => 'required|integer|unique:mahasiswa,nim',
+            'tempat_lahir' => 'nullable|string|max:100',
+            'tanggal_lahir' => 'nullable|date',
+            'kelas_id' => 'nullable|exists:kelas,id',
+        ]);
+
+        // Proses penyimpanan data
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'mahasiswa',
+            ]);
+
+            Mahasiswa::create([
+                'user_id' => $user->id,
+                'kelas_id' => $request->kelas_id ?? null,
+                'nim' => $request->nim,
+                'name' => $request->username,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+            ]);
+        });
+
+        return redirect()->route('mahasiswa.index')->with('success', 'Dosen berhasil ditambahkan');
     }
 
     public function edit($id)
