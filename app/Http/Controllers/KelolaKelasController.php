@@ -48,16 +48,6 @@ class KelolaKelasController extends Controller
         return redirect()->back()->with('success', 'Mahasiswa berhasil ditambahkan ke kelas.');
     }
 
-
-    // public function edit($id)
-    // {
-    //     $kelas = Kelas::findOrFail($id);
-    //     $dosen = Dosen::all();
-    //     $mahasiswa = Mahasiswa::all();
-    
-    //     return view('kelas.edit', compact('kelas', 'dosen', 'mahasiswa'));
-    // }
-
     public function update(Request $request, $id)
     {
         $kelas = Kelas::findOrFail($id);

@@ -5,7 +5,7 @@
     <h2 class="text-2xl font-bold text-gray-700 mb-6 ">Daftar Dosen</h2>
     <div x-data="{ createDosenModal : false}" x-cloak class="mb-4">
         <!-- Button untuk membuka modal Tambah Dosen -->
-        <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" @click="createDosenModal = true">
+        <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" x-on:click="createDosenModal = !createDosenModal">
             Tambah Dosen
         </button>
             @include('form.tambah-dosen-modal', [
@@ -39,14 +39,15 @@
                 <td class="px-5 py-3">{{ $dsn->kelas->name ?? '-' }}</td>
                 <td class="px-5 py-3">
                     <div x-data="{ editDosenModal : false }" x-cloak class="mb-4">
-                    <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" @click="editDosenModal = true">Edit</button>
-                    @include('form.edit-dosen-modal', [
-                        'title' => 'Edit Dosen',
-                        'actionUrl' => route('dosen.update', $dsn->id),
-                        'dosen' => $dsn,
-                        'kelas' => $kelas,
-                        'isEdit' => true
-                    ])
+                        <button type="button" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:underline" @click="editDosenModal = true">Edit</button>
+                        @include('form.edit-dosen-modal', [
+                            'title' => 'Edit Dosen',
+                            'actionUrl' => route('dosen.update', $dsn->id),
+                            'dosen' => $dsn,
+                            'kelas' => $kelas,
+                            'isEdit' => true
+                        ])
+                    </div>
                     <div x-data="{ openDeleteModal : false}" x-cloak class="mb-4">
                         <!-- Button untuk membuka modal Tambah Kelas -->
                         <button type="button" class="bg-red-600 text-white py-2 px-4 rounded-md hover:underline" @click="openDeleteModal = true">Hapus</button>
