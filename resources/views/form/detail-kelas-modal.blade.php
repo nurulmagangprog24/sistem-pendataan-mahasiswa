@@ -2,7 +2,9 @@
     <div class="bg-white p-6 rounded-lg shadow-lg ">  
         <div class="flex justify-between mb-4">
             <h2 class="text-2xl font-bold text-gray-700 ">Daftar Mahasiswa Kelas {{ $kelas->name }}</h2>
-            <button @click="openDetailModal = false" class="border border-slate-400 rounded px-2">X</button>
+            <button @click="openDetailModal = false" class="border border-slate-400 rounded px-2">
+                <i class="fa-solid fa-x hover:cursor-pointer"></i>
+            </button>
         </div>
         <!-- Button untuk membuka modal Tambah Mahasiswa -->
         <div class="min-w-full">
