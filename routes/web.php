@@ -21,7 +21,7 @@ Route::middleware(['guest'])->group(function() {
     Route::post('/', [LoginController::class, 'validasiLogin']);
 });
 Route::get('/home', function() {
-    return redirect('/dashboard');
+    return route('login');
 });
 
 Route::middleware(['auth'])->group(function () {
