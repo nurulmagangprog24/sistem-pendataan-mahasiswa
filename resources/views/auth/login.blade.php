@@ -46,7 +46,7 @@
             </div>
 
             <div class="flex flex-col items-center justify-center gap-y-2">
-              <button type="submit" class="w-4/5 rounded-full bg-blue-600 p-2 px-12 text-white">
+              <button type="submit" class="w-full rounded-md bg-blue-600 p-2 px-12 text-white">
                 <a href="">Masuk</a>
               </button>
               <div class="flex items-center gap-x-1 text-sm">
@@ -59,11 +59,5 @@
         </form>
     </div>
   </div>
-
-  {{-- @if($message = Session::get('success'))
-      <script>
-        $val.fire('{{ $message }}')
-      </script>   
-  @endif --}}
 </body>
 </html>
