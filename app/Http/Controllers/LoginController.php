@@ -44,4 +44,27 @@ class LoginController extends Controller
         return redirect('')->with('success', 'Berhasil Logout');
     }
 
+    
+    public function resetPassword(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        // Verifikasi password saat ini
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password saat ini tidak sesuai.']);
+        }
+
+        // Perbarui password
+        User::where('id', Auth::id())->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+        
+        return back()->with('success', 'Password berhasil direset.');
+    }
 }

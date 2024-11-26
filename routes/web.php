@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::resource('kelas', KelolaKelasController::class);
 Route::resource('dosen', KelolaDosenController::class);
-Route::resource('mahasiswa', KelolaMahasiswaController::class);
+// Route::resource('mahasiswa', KelolaMahasiswaController::class);
 
 Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function () {
     Route::get('/kelola-dosen', [KelolaDosenController::class, 'index'])->name('kelola-dosen');
@@ -54,6 +54,7 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->group(functi
     Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
     Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profil.edit');
     Route::put('/profil', [ProfileController::class, 'update'])->name('profil.update');
+    Route::post('/reset-password', [LoginController::class, 'resetPassword'])->name('password.update');
 });
 
 
