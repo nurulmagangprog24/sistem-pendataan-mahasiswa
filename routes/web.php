@@ -23,50 +23,42 @@ Route::middleware(['guest'])->group(function() {
 Route::get('/home', function() {
     return route('login');
 });
+// Route::get('/home', function() {
+//     return redirect()->route('dashboard');
+// });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
+    Route::put('/profil/update', [ProfileController::class, 'update'])->name('profil.update');
+    Route::post('/reset-password', [LoginController::class, 'resetPassword'])->name('password.update');
     Route::get('/logout', [LoginController::class, 'logout']);
 });
-Route::resource('kelas', KelolaKelasController::class);
-Route::resource('dosen', KelolaDosenController::class);
-// Route::resource('mahasiswa', KelolaMahasiswaController::class);
 
 Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function () {
     Route::get('/kelola-dosen', [KelolaDosenController::class, 'index'])->name('kelola-dosen');
     Route::post('/kelola-dosen/store', [KelolaDosenController::class, 'store'])->name('dosen.store');
+    Route::put('/kelola-dosen/{id}/update', [KelolaDosenController::class, 'update'])->name('dosen.update');
+    Route::delete('/kelola-dosen/{id}', [KelolaDosenController::class, 'destroy'])->name('dosen.destroy');     
     Route::get('/kelola-kelas', [KelolaKelasController::class, 'index'])->name('kelola-kelas');
+    Route::post('/kelola-kelas/store', [KelolaKelasController::class, 'store'])->name('kelas.store');
+    Route::put('/kelola-kelas/{id}/update', [KelolaKelasController::class, 'update'])->name('kelas.update');
+    Route::delete('/kelola-kelas/{id}', [KelolaKelasController::class, 'destroy'])->name('kelas.destroy');     
     Route::post('/kelola-kelas/{kelas}/tambah-mahasiswa', [KelolaKelasController::class, 'addMahasiswa'])->name('kelola-kelas.tambahMahasiswa');
-    Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
-    Route::delete('/dosen/{id}', [KelolaDosenController::class, 'destroy'])->name('kelola-dosen.hapus');     
-    Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
+    // Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
 });
     
 Route::prefix('dosen')->middleware(['auth', 'role:dosen wali'])->group(function () {
-    Route::get('/kelas', [KelolaMahasiswaController::class, 'listMhs'])->name('kelas');
+    Route::get('/kelas', [KelolaMahasiswaController::class, 'listMhs'])->name('mahasiswa-kelas');
+    Route::post('/kelola-mahasiswa/store', [KelolaMahasiswaController::class, 'store'])->name('mahasiswa.store');
+    Route::put('/kelola-mahasiswa/{id}/update', [KelolaMahasiswaController::class, 'update'])->name('mahasiswa.update');
+    Route::delete('/kelola-mahasiswa/{id}', [KelolaMahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');    
     Route::get('/requests', [RequestController::class, 'index'])->name('requests-list');
     Route::post('/requests/{id}/approve', [RequestController::class, 'approve'])->name('requests.approve');
     Route::post('/requests/{id}/reject', [RequestController::class, 'reject'])->name('requests.reject');
 });
 
 Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->group(function () {
-    Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
     Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
     Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profil.edit');
-    Route::put('/profil', [ProfileController::class, 'update'])->name('profil.update');
-    Route::post('/reset-password', [LoginController::class, 'resetPassword'])->name('password.update');
 });
-
-
-
-// Route::group(['middleware' => ['auth', 'role:kaprodi']], function () {
-//     // Rute untuk Kaprodi
-// });
-
-// Route::group(['middleware' => ['auth', 'role:dosen']], function () {
-//     // Rute untuk Dosen
-// });
-
-// Route::group(['middleware' => ['auth', 'role:mahasiswa']], function () {
-//     // Rute untuk Mahasiswa
-// });

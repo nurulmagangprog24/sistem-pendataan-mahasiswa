@@ -4,14 +4,18 @@
     <form method="POST" action="{{ route('kelola-kelas.tambahMahasiswa', $kelas->id) }}">
       @csrf
       <label for="mahasiswa" class="block text-gray-700 mb-3">Pilih Mahasiswa</label>
+      <div class="text-gray-500 mb-2 grid grid-cols-2 gap-4">
+        <span class="font-bold">Nama</span>
+        <span class="font-bold">NIM</span>
+      </div>
       <select name="mahasiswa_id" id="mahasiswa" class="block w-full border-gray-300 rounded-md shadow-sm">
         @foreach ($availableMahasiswa as $mhs)
           <option value="{{ $mhs->id }}">{{ $mhs->name }} ({{ $mhs->nim }})</option>
         @endforeach
       </select>
       <div class="mt-4">
-        <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded">Tambah</button>
         <button @click="openAddModal = false" type="button" class="bg-gray-600 text-white py-2 px-4 rounded">Batal</button>
+        <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded">Tambah</button>
       </div>
     </form>
   </div>
