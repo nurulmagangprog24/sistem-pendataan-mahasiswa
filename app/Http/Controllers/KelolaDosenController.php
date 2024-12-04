@@ -49,6 +49,7 @@ class KelolaDosenController extends Controller
 
         return redirect()->route('kelola-dosen')->with('success', 'Dosen berhasil ditambahkan');
     }
+    
 
     public function edit($id)
     {
@@ -68,6 +69,11 @@ class KelolaDosenController extends Controller
        $dosen = Dosen::findOrFail($id);
        $dosen->update($validatedData);
        $dosen->save();
+
+        $user = $dosen->user;
+        $user->update([
+            'username' => $validatedData['name'],
+        ]);
          
        return redirect()->route('kelola-dosen')->with('success', 'Data dosen berhasil diperbarui');
     }
@@ -75,7 +81,12 @@ class KelolaDosenController extends Controller
     public function destroy($id)
     {
         $dosen = Dosen::findOrFail($id);
+        $user = User::findOrFail($dosen->user_id);
+        
+        $user->delete();
         $dosen->delete();
-        return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil dihapus');
+
+        return redirect()->route('kelola-dosen')->with('success', 'Data dosen berhasil dihapus');
+
     }
 }
