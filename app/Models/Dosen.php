@@ -19,26 +19,14 @@ class Dosen extends Model
         'name'
     ];
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::deleting(function ($dosen) {
-    //         // Hapus user yang terkait dengan dosen
-    //         if ($dosen->user) {
-    //             $dosen->user->delete();
-    //         }
-    //     });
-    // }
-
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class);
+        return $this->belongsTo(Kelas::class, 'kelas_id');
     }
         
 }

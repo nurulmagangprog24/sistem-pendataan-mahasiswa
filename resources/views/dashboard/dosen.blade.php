@@ -1,17 +1,17 @@
 @extends('components.layout')
 
 @section('content')
-<div class="container mx-auto p-4">
-    <h2 class="text-3xl font-bold text-gray-700 ml-3">Dashboard</h2>
-    <div class="mt-6 p-2 grid grid-cols-3 gap-3 md:grid-cols-3 md:p-4 overflow-hidden">
-    {{-- <div class="grid grid-cols-3 gap-6 m-8"> --}}
+{{-- <div class="container mx-auto px-5"> --}}
+    {{-- <h1 class="text-3xl font-bold text-gray-700 mb-6">Dashboard</h1> --}}
+    <div class="grid grid-cols-3 gap-6 m-8">
+            <!-- Dosen Widgets -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Mahasiswa di Bimbingan</h2>
-                <p class="text-gray-600">{{ $jumlahMahasiswa }} Mahasiswa</p>
+                <p class="text-gray-600">{{ $jumlahMahasiswa }}</p>
             </div>
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h2 class="text-xl font-semibold text-gray-700">Permintaan Perubahan Data</h2>
-                <p class="text-gray-600">{{ $jumlahPermintaan }} Permintaan Edit</p>
+                <p class="text-gray-600">{{ $jumlahPermintaan }}</p>
             </div>
     </div>
 </div>

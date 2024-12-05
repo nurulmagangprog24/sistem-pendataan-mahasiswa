@@ -10,20 +10,20 @@
                     <h3 class="text-lg leading-6 font-medium text-gray-900">{{ $title }}</h3>
                     <div class="mt-4 text-left">
                       <label for="name" class="block text-sm font-medium text-gray-700">Nama Kelas</label>
-                      <input type="text" name="name" id="name" value="{{ $kelas->name ?? '' }}" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                      <input type="text" name="name" id="name" value="{{ $kelas->name ?? '' }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                     </div>
                     <div class="mt-4 text-left">
                       <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah Kapasitas</label>
-                      <input type="text" name="jumlah" id="jumlah" value="{{ $kelas->jumlah ?? '' }}" class="w-full px-2 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                      <input type="text" name="jumlah" id="jumlah" value="{{ $kelas->jumlah ?? '' }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                     </div>
                     <div class="mt-4 text-left">
                         <label for="dosen_id" class="block text-sm font-medium text-gray-700">Pilih Dosen</label>
-                        <select name="dosen_id" id="dosen_id" class="border border-gray-400 px-3 py-2 rounded-md w-full">
+                        <select name="dosen_id" id="dosen_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                           <option value="" disabled selected>-- Pilih Dosen --</option>
                           @foreach($dosen as $dsn)
-                          <option value="{{ $dsn->id }}" {{ isset($kelas) && $kelas->dosen_id == $dsn->id ? 'selected' : '' }}>
-                            {{ $dsn->name }}
-                          </option>
+                            <option value="{{ $dsn->id }}" {{ isset($kelas) && $kelas->dosen_id == $dosen->id ? 'selected' : '' }}>
+                              {{ $dsn->name }}
+                            </option>
                           @endforeach
                         </select>
                       </div>
