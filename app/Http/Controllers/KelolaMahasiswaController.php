@@ -11,33 +11,46 @@ use Illuminate\Support\Facades\Hash;
 
 class KelolaMahasiswaController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $mahasiswa = Mahasiswa::with('kelas')->get();
         $kelas = Kelas::all();
 
         return view('dosen.kelola-mahasiswa', compact('mahasiswa', 'kelas'));
     }
 
-    public function listMhs() {
+    public function listMhs()
+    {
         $mahasiswa = Mahasiswa::with('kelas')->get();
         $kelas = Kelas::all();
 
         $dosen = auth()->user()->dosen;
-        $mahasiswa = $dosen->kelas ? $dosen->kelas->mahasiswa : collect();
+        $kelasDosen = $dosen->kelas;
+        $mahasiswa = $kelasDosen ? $kelasDosen->mahasiswa : collect();
 
-        return view('dosen.kelola-mahasiswa', compact('mahasiswa', 'kelas'));
+        return view('dosen.kelola-mahasiswa', compact('mahasiswa', 'kelasDosen', 'kelas'));
     }
+
 
     public function store(Request $request)
     {
+        $kelas = Kelas::findOrFail($request->kelas_id);
+
+        // Hitung jumlah mahasiswa dalam kelas
+        $jumlahMahasiswa = $kelas->mahasiswa()->count();
+
+        if ($jumlahMahasiswa >= $kelas->jumlah) {
+            return redirect()->back()->with('error', 'Kelas sudah penuh. Tidak dapat menambahkan mahasiswa baru.');
+        }
+
         // Validasi data
         $request->validate([
             'username' => 'required|string|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'nim' => 'required|integer|unique:mahasiswa,nim',
-            'tempat_lahir' => 'nullable|string|max:100',
-            'tanggal_lahir' => 'nullable|date',
+            'tempat_lahir' => 'required|string|max:100',
+            'tanggal_lahir' => 'required|date',
             'kelas_id' => 'nullable|exists:kelas,id',
         ]);
 
@@ -60,7 +73,7 @@ class KelolaMahasiswaController extends Controller
             ]);
         });
 
-        return redirect()->route('mahasiswa.index')->with('success', 'Dosen berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Mahasiswa berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -70,37 +83,37 @@ class KelolaMahasiswaController extends Controller
         return view('dosen.kelola-mahasiswa', compact('mahasiswa', 'kelas'));
     }
 
-    public function update(Request $request, $id) {
-      $validatedData = $request->validate([
-           'kelas_id' => 'nullable|exists:kelas,id',
-           'nim' => 'required|unique:mahasiswa,nim,' . $id,
-           'name' => 'required|string',
-           'tempat_lahir' => 'required|string',
-           'tanggal_lahir' => 'required|date',
-       ]);
-        
-       $mahasiswa = Mahasiswa::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'kelas_id' => 'nullable|exists:kelas,id',
+            'nim' => 'required|unique:mahasiswa,nim,' . $id,
+            'name' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+        ]);
 
-       if ($request->filled('kelas_id') && $mahasiswa->kelas_id !== $request->kelas_id) {
-        $kelas = Kelas::findOrFail($request->kelas_id);
+        $mahasiswa = Mahasiswa::findOrFail($id);
 
-        // Periksa apakah jumlah mahasiswa di kelas sudah mencapai batas maksimal
-        if ($kelas->mahasiswa()->count() >= $kelas->jumlah) {
-            return redirect()->back()->withErrors(['msg' => 'Jumlah mahasiswa di kelas ini telah mencapai batas maksimal.']);
+        if ($request->filled('kelas_id') && $mahasiswa->kelas_id !== $request->kelas_id) {
+            $kelas = Kelas::findOrFail($request->kelas_id);
+
+            // Periksa apakah jumlah mahasiswa di kelas sudah mencapai batas maksimal
+            if ($kelas->mahasiswa()->count() >= $kelas->jumlah) {
+                return redirect()->back()->withErrors(['msg' => 'Jumlah mahasiswa di kelas ini telah mencapai batas maksimal.']);
+            }
         }
-    }
 
-       $mahasiswa->update($validatedData);
-       $mahasiswa->save();
-         
-       return redirect()->route('kelola-mahasiswa')->with('success', 'Data dosen berhasil diperbarui');
+        $mahasiswa->update($validatedData);
+        $mahasiswa->save();
+
+        return redirect()->route('mahasiswa-kelas')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
         $mahasiswa->delete();
-        return redirect()->route('mahasiswa.index')->with('success', 'Data mahasiswa berhasil dihapus');
+        return redirect()->route('mahasiswa-kelas')->with('success', 'Data mahasiswa berhasil dihapus');
     }
 }
-

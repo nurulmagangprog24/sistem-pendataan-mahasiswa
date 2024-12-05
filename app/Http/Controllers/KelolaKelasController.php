@@ -28,11 +28,21 @@ class KelolaKelasController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|unique:kelas,name',
             'jumlah' => 'required|integer|min:1',
-            'dosen_id' => 'exists:dosens,id',
+            'dosen_id' => 'exists:dosen,id',
         ]);
 
-        Kelas::create($validatedData);
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil ditambahkan');
+        $kelas = Kelas::create([
+            'name' => $validatedData['name'],
+            'jumlah' => $validatedData['jumlah'],
+        ]);
+
+        // Jika dosen_id diisi, update dosen yang dipilih
+        if (!empty($validatedData['dosen_id'])) {
+            $dosen = Dosen::findOrFail($validatedData['dosen_id']);
+            $dosen->update(['kelas_id' => $kelas->id]);
+        }
+
+        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dibuat');
     }
 
     public function addMahasiswa(Request $request, Kelas $kelas)
@@ -50,33 +60,39 @@ class KelolaKelasController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $kelas = Kelas::findOrFail($id);
 
         $validatedData = $request->validate([
             'name' => 'required|string|unique:kelas,name,' . $kelas->id,
             'jumlah' => 'required|integer|min:1',
-            'dosen_id' => 'exists:dosens,id',
+            'dosen_id' => 'exists:dosen,id',
         ]);
 
-        $kelas->update($validatedData);
-        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diperbarui');
+        $kelas->update([
+            'name' => $validatedData['name'],
+            'jumlah' => $validatedData['jumlah'],
+        ]);
+
+        // Update kolom kelas_id di tabel dosen
+        if (!empty($validatedData['dosen_id'])) {
+        // Set dosen sebelumnya yang terkait dengan kelas ini menjadi null
+        Dosen::where('kelas_id', $kelas->id)->update(['kelas_id' => null]);
+        }
+
+        // Update dosen yang dipilih untuk menjadi dosen kelas ini
+        $dosen = Dosen::findOrFail($validatedData['dosen_id']);
+        $dosen->update(['kelas_id' => $kelas->id]);
+
+        return redirect()->route('kelola-kelas')->with('success', 'Data kelas berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $kelas = Kelas::findOrFail($id);
-        $kelas->delete();
+        $kelas -> delete();
 
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dihapus');
+        return redirect()->route('kelola-kelas')->with('success', 'Kelas berhasil dihapus');
     }
 
-    // // Plotting mahasiswa dan dosen ke kelas
-    // public function plot(Request $request, $id)
-    // {
-    //     $kelas = Kelas::findOrFail($id);
-    //     $kelas->dosen()->sync($request->dosen_ids);  // Plotting dosen ke kelas
-    //     $kelas->mahasiswa()->sync($request->mahasiswa_ids);  // Plotting mahasiswa ke kelas
-
-    //     return redirect()->route('kelas.index')->with('success', 'Plotting berhasil diperbarui');
-    // }
 }

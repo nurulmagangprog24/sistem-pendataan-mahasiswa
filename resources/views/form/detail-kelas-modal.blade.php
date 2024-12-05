@@ -3,7 +3,9 @@
         <div class="flex justify-between mb-4">
             <h2 class="text-2xl font-bold text-gray-700 ">Daftar Mahasiswa Kelas {{ $kelas->name }}</h2>
             <button @click="openDetailModal = false" class="border border-slate-400 rounded px-2">
-                <i class="fa-solid fa-x hover:cursor-pointer"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 hover:cursor-pointer">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
             </button>
         </div>
         <!-- Button untuk membuka modal Tambah Mahasiswa -->
