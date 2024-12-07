@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-500">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -14,20 +14,23 @@
 <body class="h-full">
     <div class="flex min-h-full w-full">
         <x-sidebar></x-sidebar>
-        <main class="flex-1 min-h-screen">
+        <main class="flex-1 min-h-screen bg-gray-100">
             <x-header></x-header>
             <section class="py-4 lg:py-8">
-                {{-- @if (session('error'))
-                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-2" role="alert">
-                        <p>{{ session('error') }}</p>
+                @if (session('success'))
+                    <div class="bg-green-100 text-green-700 p-4 my-2 rounded-md" role="alert">
+                        {{ session('success') }}
                     </div>
                 @endif
-                @if (session('success'))
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 my-2" role="alert">
-                        <p>{{ session('success') }}</p>
-                    </div>
-                @endif --}}
-
+                @if ($errors->any())
+                <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 @yield('content')
             </section>
         </main>

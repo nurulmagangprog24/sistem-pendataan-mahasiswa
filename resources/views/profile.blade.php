@@ -2,7 +2,7 @@
 
 @section('content')
     @if (session('success'))
-        <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
+        <div class="mb-4 p-4 bg-green-100 text-green-700 rounded" role="alert">
             {{ session('success') }}
         </div>
     @endif
@@ -13,12 +13,6 @@
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
-        </div>
-    @endif
-    <!-- Flash Message Jika Request Ditolak -->
-    @if (session('request_rejected'))
-        <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
-            {{ session('request_rejected') }}
         </div>
     @endif
     <div class="w-full xl h-screen grid grid-cols gap-5 px-4 lg:px-8 lg:grid-cols-2">
@@ -33,7 +27,7 @@
 
             <div class="mb-4">
                 <label class="block text-gray-600 font-medium mb-1">Email</label>
-                <p class="w-full px-4 py-2 border rounded-mdbg-gray-100">{{ $user->email }}</p>
+                <p class="w-full px-4 py-2 border rounded-md bg-gray-100">{{ $user->email }}</p>
             </div>
 
             @if (Auth::user()->role === 'kaprodi' || Auth::user()->role === 'dosen wali')
@@ -79,7 +73,7 @@
                         </button>
                         @include('form.edit-data-modal', ['mahasiswa' => $mahasiswa])
                     </div>
-                @else
+                @elseif($mahasiswa->kelas)
                     <div x-data="{ openRequestModal: false }">
                         <button type="button"
                             class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md"
@@ -93,6 +87,10 @@
                             'kelas' => $kelas,
                             'isEdit' => false,
                         ])
+                    </div>
+                    @else
+                <div class="mt-6 w-full bg-yellow-500 text-white font-semibold py-2 rounded-md text-center">
+                        Anda Belum terdaftar di kelas.
                     </div>
                 @endif
             @endif

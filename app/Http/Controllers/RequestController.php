@@ -35,7 +35,7 @@ class RequestController extends Controller
             'mahasiswa_id' => auth()->user()->mahasiswa->id,
         ]);
 
-        return redirect()->back()->with('success', 'Request sent to advisor.');
+        return redirect()->back()->with('success', 'Permintaan edit berhasil dikirim.');
     }
 
     public function approve($id)

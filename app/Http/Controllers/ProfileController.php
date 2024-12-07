@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kaprodi;
 use App\Models\User;
 use App\Models\Dosen;
+use App\Models\Kaprodi;
 use App\Models\Mahasiswa;
-use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Support\ValidatedData;
 
 class ProfileController extends Controller
 {
@@ -47,6 +48,9 @@ class ProfileController extends Controller
                     'kode_dosen' => 'required|unique:kaprodi,kode_dosen,' . ($user->kaprodi ? $user->kaprodi->id : ''),
                 ]));
                 $user->kaprodi->update($validatedData);
+
+            // Update nama berdasarkan username
+            $user->kaprodi->update(['name' => $validatedData['username']]);
             } else {
                 // Validasi untuk Dosen
                 $validatedData = array_merge($validatedData, $request->validate([
@@ -54,6 +58,10 @@ class ProfileController extends Controller
                     'kode_dosen' => 'required|unique:dosen,kode_dosen,' . ($user->dosen ? $user->dosen->id : ''),
                 ]));
                 $user->dosen->update($validatedData);
+
+            // Update nama berdasarkan username
+            $user->dosen->update(['name' => $validatedData['username']]);
+                
             }
         }
 
@@ -68,8 +76,16 @@ class ProfileController extends Controller
 
             // Update data mahasiswa
             $user->mahasiswa->update($validatedData);
-        }
+            // Update nama berdasarkan username
+            $user->mahasiswa->update(['name' => $validatedData['username']]);
 
+            $mahasiswa = $user->mahasiswa; 
+
+            $mahasiswa->edit = false;
+            $mahasiswa->save();
+
+        }
+        
         // Update data user (username dan email)
         $user = User::findOrFail($user->id); 
         $user->update($validatedData);

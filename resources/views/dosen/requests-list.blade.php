@@ -30,7 +30,7 @@
                         <td class="px-4 py-2">{{ $request->kelas->name }}</td>
                         <td class="px-4 py-2">{{ $request->keterangan }}</td>
                         <td class="px-4 py-2">{{ $request->created_at->format('d-m-Y H:i') }}</td>
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-2 inline-flex gap-3">
                             <form action="{{ route('requests.approve', $request->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="bg-green-500 text-white py-2 px-3 rounded hover:bg-green-600">
