@@ -10,7 +10,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelolaDosenController;
 use App\Http\Controllers\KelolaKelasController;
 use App\Http\Controllers\KelolaMahasiswaController;
-use App\Http\Controllers\DosenController;
 
 
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
@@ -20,12 +19,10 @@ Route::middleware(['guest'])->group(function() {
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/', [LoginController::class, 'validasiLogin']);
 });
+
 Route::get('/home', function() {
-    return route('login');
+    return redirect()->route('dashboard');
 });
-// Route::get('/home', function() {
-//     return redirect()->route('dashboard');
-// });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -45,6 +42,8 @@ Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function (
     Route::put('/kelola-kelas/{id}/update', [KelolaKelasController::class, 'update'])->name('kelas.update');
     Route::delete('/kelola-kelas/{id}', [KelolaKelasController::class, 'destroy'])->name('kelas.destroy');     
     Route::post('/kelola-kelas/{kelas}/tambah-mahasiswa', [KelolaKelasController::class, 'addMahasiswa'])->name('kelola-kelas.tambahMahasiswa');
+    // Route::delete('/kelola-kelas/{kelas}/hapus/{mahasiswa}', [KelolaKelasController::class, 'hapusMahasiswa'])->name('kelola-kelas.hapusMahasiswa');
+    Route::put('/kelola-kelas/{kelas}/pindahkan/{mahasiswa}', [KelolaKelasController::class, 'pindahkanMahasiswa'])->name('kelola-kelas.pindahkanMahasiswa');
     // Route::get('/kelola-mahasiswa', [KelolaMahasiswaController::class, 'index'])->name('kelola-mahasiswa');
 });
     
@@ -52,7 +51,8 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen wali'])->group(function 
     Route::get('/kelas', [KelolaMahasiswaController::class, 'listMhs'])->name('mahasiswa-kelas');
     Route::post('/kelola-mahasiswa/store', [KelolaMahasiswaController::class, 'store'])->name('mahasiswa.store');
     Route::put('/kelola-mahasiswa/{id}/update', [KelolaMahasiswaController::class, 'update'])->name('mahasiswa.update');
-    Route::delete('/kelola-mahasiswa/{id}', [KelolaMahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');    
+    Route::delete('/kelola-mahasiswa/{id}', [KelolaMahasiswaController::class, 'destroy'])->name('mahasiswa.destroy'); 
+    Route::delete('/kelola-mahasiswa/{id}/remove', [KelolaMahasiswaController::class, 'removeFromClass'])->name('mahasiswa.remove');   
     Route::get('/requests', [RequestController::class, 'index'])->name('requests-list');
     Route::post('/requests/{id}/approve', [RequestController::class, 'approve'])->name('requests.approve');
     Route::post('/requests/{id}/reject', [RequestController::class, 'reject'])->name('requests.reject');

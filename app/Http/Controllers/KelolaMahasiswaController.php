@@ -113,7 +113,30 @@ class KelolaMahasiswaController extends Controller
     public function destroy($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
+        $user = User::findOrFail($mahasiswa->user_id);
+        $user->delete();
         $mahasiswa->delete();
+
         return redirect()->route('mahasiswa-kelas')->with('success', 'Data mahasiswa berhasil dihapus');
+    }
+
+    public function removeFromClass($id)
+    {
+        $mahasiswa = Mahasiswa::find($id);
+
+        if (!$mahasiswa) {
+            return redirect()->back()->with('error', 'Mahasiswa tidak ditemukan.');
+        }
+
+        // Pastikan mahasiswa memiliki kelas yang terhubung
+        if (!$mahasiswa->kelas_id) {
+            return redirect()->back()->with('error', 'Mahasiswa ini tidak terdaftar di kelas mana pun.');
+        }
+
+        // Set kelas_id menjadi null untuk mengeluarkan mahasiswa dari kelas
+        $mahasiswa->kelas_id = null;
+        $mahasiswa->save();
+
+        return redirect()->back()->with('success', 'Mahasiswa berhasil dikeluarkan dari kelas.');
     }
 }

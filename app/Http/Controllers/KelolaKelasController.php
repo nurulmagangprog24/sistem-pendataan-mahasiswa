@@ -6,6 +6,7 @@ use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+
 class KelolaKelasController extends Controller
 {
     public function index()
@@ -13,14 +14,15 @@ class KelolaKelasController extends Controller
         $dosen = Dosen::whereDoesntHave('kelas')->get();
         $kelas = Kelas::with('dosen', 'mahasiswa')->withCount('mahasiswa')->get();
         $availableMahasiswa = Mahasiswa::whereNull('kelas_id')->get();
-        
-        $mahasiswa = []; 
-    
+
+        $mahasiswa = [];
+        $allKelas = Kelas::all();
+
         // Ambil data mahasiswa untuk semua kelas (opsional)
         foreach ($kelas as $item) {
             $mahasiswa[$item->id] = $item->mahasiswa()->get(); // Ambil mahasiswa berdasarkan kelas
         }
-        return view('kaprodi.kelola-kelas', compact('dosen', 'kelas', 'mahasiswa', 'availableMahasiswa'));
+        return view('kaprodi.kelola-kelas', compact('dosen', 'kelas', 'mahasiswa', 'availableMahasiswa', 'allKelas'));
     }
 
     public function store(Request $request)
@@ -42,7 +44,7 @@ class KelolaKelasController extends Controller
             $dosen->update(['kelas_id' => $kelas->id]);
         }
 
-        return redirect()->route('kelas.index')->with('success', 'Kelas berhasil dibuat');
+        return redirect()->back()->with('success', 'Kelas berhasil dibuat');
     }
 
     public function addMahasiswa(Request $request, Kelas $kelas)
@@ -76,8 +78,8 @@ class KelolaKelasController extends Controller
 
         // Update kolom kelas_id di tabel dosen
         if (!empty($validatedData['dosen_id'])) {
-        // Set dosen sebelumnya yang terkait dengan kelas ini menjadi null
-        Dosen::where('kelas_id', $kelas->id)->update(['kelas_id' => null]);
+            // Set dosen sebelumnya yang terkait dengan kelas ini menjadi null
+            Dosen::where('kelas_id', $kelas->id)->update(['kelas_id' => null]);
         }
 
         // Update dosen yang dipilih untuk menjadi dosen kelas ini
@@ -90,9 +92,38 @@ class KelolaKelasController extends Controller
     public function destroy($id)
     {
         $kelas = Kelas::findOrFail($id);
-        $kelas -> delete();
+        $kelas->delete();
 
         return redirect()->route('kelola-kelas')->with('success', 'Kelas berhasil dihapus');
     }
 
+    public function hapusMahasiswa($kelasId, $mahasiswaId)
+    {
+        $kelas = Kelas::findOrFail($kelasId);
+        $mahasiswa = Mahasiswa::findOrFail($mahasiswaId);
+
+        if ($mahasiswa->kelas_id == $kelas->id) {
+            $mahasiswa->kelas_id = null; // Hapus dari kelas
+            $mahasiswa->save();
+        }
+
+        return redirect()->route('kelola-kelas.detail', $kelas->id)
+            ->with('success', 'Mahasiswa berhasil dikeluarkan dari kelas.');
+    }
+
+    public function pindahkanMahasiswa(Request $request, $kelasId, $mahasiswaId)
+    {
+        $request->validate([
+            'kelas_id' => 'required|exists:kelas,id',
+        ]);
+
+        $mahasiswa = Mahasiswa::findOrFail($mahasiswaId);
+        $kelasTujuan = Kelas::findOrFail($request->kelas_id);
+        
+        $mahasiswa->kelas_id = $kelasTujuan->id; // Pindahkan ke kelas tujuan
+        $mahasiswa->save();
+
+        return redirect()->back()
+            ->with('success', 'Mahasiswa berhasil dipindahkan ke kelas ' . $kelasTujuan->name);
+    }
 }

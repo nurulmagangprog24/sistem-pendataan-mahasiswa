@@ -8,12 +8,12 @@
             <div class="h-15 bg-slate-300 aspect-video p-4 rounded-lg shadow-md md:aspect-auto ">
                 <h2 class="text-xl font-semibold text-gray-700">Jumlah Dosen</h2>
                 <p class="text-gray-600">{{ $jumlahDosen }} Dosen</p>
-                <a href="/kelola-dosen" class="block mt-4 text-blue-500 hover:underline">Lihat Detail</a>
+                <a href="{{ route('kelola-dosen') }}" class="block mt-4 text-blue-500 hover:underline">Lihat Detail</a>
             </div>
             <div class="h-15 bg-slate-300 aspect-video p-4 rounded-lg shadow-md md:aspect-auto ">
                 <h2 class="text-xl font-semibold text-gray-700">Jumlah Kelas</h2>
                 <p class="text-gray-600">{{ $jumlahKelas }} Kelas</p>
-                <a href="/kelola-dosen" class="block mt-4 text-blue-500 hover:underline">Lihat Detail</a>
+                <a href="{{ route('kelola-kelas') }}" class="block mt-4 text-blue-500 hover:underline">Lihat Detail</a>
             </div>
     </div>
 </div>

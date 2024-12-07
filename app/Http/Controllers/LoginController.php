@@ -9,42 +9,46 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    function showLoginForm() {
+    function showLoginForm()
+    {
         return view('auth.login');
     }
 
-    function validasiLogin(Request $request) {
+    function validasiLogin(Request $request)
+    {
         $request->validate([
             'email' => 'required',
             'password' => 'required'
         ]);
 
-        $dataLogin =  [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
+        $user = User::where('email', $request->email)->first();
 
-        // if(Auth::attempt($dataLogin)) {
-        //     if(Auth::user()->role == 'kaprodi'){
-        //         return redirect('dashboard/kaprodi');
-        //     } elseif (Auth::user()->role == 'dosen wali'){
-        //         return redirect('dashboard/dosen');
-        //     } elseif (Auth::user()->role == 'mahasiswa'){
-        //         return redirect('dashboard/mahasiswa');
-        //     }
-        // } else {
-        //     return redirect('')->withErrors('Email atau password yang dimasukkan tidak sesuai')->withInput();
-        // }
-        Auth::attempt($dataLogin);
+        // Validasi email dan password
+        $errors = [];
+        if (!$user) {
+            $errors['email'] = 'Email tidak tepat.';
+        } elseif (!Hash::check($request->password, $user->password)) {
+            $errors['password'] = 'Password tidak sesuai.';
+        }
+
+        // Cek jika ada error
+        if (!empty($errors)) {
+            return redirect('')->withErrors($errors)->withInput();
+        }
+
+        // Login user jika validasi berhasil
+        Auth::login($user);
         return redirect('dashboard');
     }
 
-    function logout() {
+
+    function logout()
+    {
         Auth::logout();
         return redirect('')->with('success', 'Berhasil Logout');
     }
 
-    
+
     public function resetPassword(Request $request)
     {
         // Validasi input
@@ -64,7 +68,7 @@ class LoginController extends Controller
         User::where('id', Auth::id())->update([
             'password' => Hash::make($request->new_password),
         ]);
-        
+
         return back()->with('success', 'Password berhasil direset.');
     }
 }

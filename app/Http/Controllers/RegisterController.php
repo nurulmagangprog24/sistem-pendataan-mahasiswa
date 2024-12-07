@@ -78,10 +78,8 @@ class RegisterController extends Controller
                 break;
         }
 
-        session()->flash('status', 'Registration successful!');
-
         // Redirect ke halaman yang sesuai setelah register
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Registrasi Berhasil. Silakan Login!!!');
     }
 
 }
